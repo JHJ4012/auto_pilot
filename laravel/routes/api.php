@@ -53,6 +53,8 @@ Route::get('dlvy/call', 'AppCallController@call');
 Route::post('dlvy/check_user/{id}', 'AppCallController@check_user');
 // qr코드
 Route::get('dlvy/qrcode/{id}', 'AppCallController@qr_user_check');
+// 채크포인트
+Route::get('dlvy/checkpoint/{start_point}/{end_point}', 'AppCallController@dlvy_checkpoint');
 
 
 // 보낸 배달

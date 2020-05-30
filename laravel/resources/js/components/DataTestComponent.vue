@@ -44,21 +44,27 @@ export default {
         },
         test5(){
             console.log('정류장 클릭')
-            Axios.get('/api/dlvy/management/path/연서관')
+            Axios.get('/api/dlvy/statistics/complete/acc/week/2020-05-28')
             .then(response=>{
                 console.log(response.data)
+                this.arr1=response.data.date_info
+                this.arr2=response.data.statis_info
+                console.log(typeof(this.arr1))
+                console.log(typeof(this.arr2))
+                
             })
         },
         test6(){
             console.log('리스트 클릭')
-            Axios.get('/api/dlvy/completedlvy/test/all/0/0')
+            Axios.get('/api/dlvy/checkpoint/후문/본관')
             .then(response=>{
                 console.log(response.data)
             })
         },
     },data(){
         return{
-
+            arr1,
+            arr2
         };
     }
 }

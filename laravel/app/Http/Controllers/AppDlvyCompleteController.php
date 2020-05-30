@@ -41,14 +41,14 @@ class AppDlvyCompleteController extends Controller
                             ->where('dlvy_sender', $id)
                             ->where('dlvy_status', '배달완료')
                             ->orderBy('dlvy_date', 'desc')
-                            ->get();
+                            ->paginate(3);
             $completed_receive_dlvy = DB::table('dlvy as d')
                             ->select('d.dlvy_date', 'd.dlvy_status', 'd.dlvy_start_point', 'dlvy_end_point', 'u.user_name as sender_name')
                             ->LeftJoin('user as u','d.dlvy_sender','=','u.user_id')
                             ->where('dlvy_receiver', $id)
                             ->where('dlvy_status', '배달완료')
                             ->orderBy('dlvy_date', 'desc')
-                            ->get(); 
+                            ->paginate(3); 
             debug($completed_send_dlvy, $completed_receive_dlvy);
         }else{    
             $completed_send_dlvy = DB::table('dlvy as d')
@@ -59,14 +59,8 @@ class AppDlvyCompleteController extends Controller
                                ->whereBetween('d.dlvy_date', [$date_end, $date_start])
                                ->orderBy('d.dlvy_date', 'desc')
                             //    ->orderBy('d.dlvy_call_start', 'desc')
-                               ->get();
-            // DB::table('dlvy')
-            //                 ->select('dlvy_receiver', 'dlvy_start_point','dlvy_end_point', 'dlvy_status', 'dlvy_date')
-            //                 ->where('dlvy_sender', $id)
-            //                 ->where('dlvy_status', '배달완료')
-            //                 ->whereBetween('dlvy_date', [$date_end, $date_start])
-            //                 ->orderBy('dlvy_date', 'desc')
-            //                 ->get();
+                               ->paginate(3);
+
             $completed_receive_dlvy = DB::table('dlvy as d')
                             ->select('d.dlvy_date', 'd.dlvy_status', 'd.dlvy_start_point', 'dlvy_end_point', 'u.user_name as sender_name')
                             ->LeftJoin('user as u','d.dlvy_sender','=','u.user_id')
@@ -74,14 +68,14 @@ class AppDlvyCompleteController extends Controller
                             ->where('d.dlvy_status', '배달완료')
                             ->whereBetween('d.dlvy_date', [$date_end, $date_start])
                             ->orderBy('d.dlvy_date', 'desc')
-                            ->get();
-            
+                            ->paginate(3);
+            debug($completed_send_dlvy, $completed_receive_dlvy);
         }
  
         $completed_dlvy = array();
         $re_count=0;
         $sen_count=0;
-
+        
         
         while(TRUE){
             if(isset($completed_receive_dlvy[$re_count]) && isset($completed_send_dlvy[$sen_count])){
@@ -99,7 +93,7 @@ class AppDlvyCompleteController extends Controller
                 $sen_count = $sen_count+1;
                 // $completed_dlvy[$count] = $completed_send_dlvy[$sen_count];
             }elseif(isset($completed_receive_dlvy[$re_count]) && !isset($completed_send_dlvy[$sen_count])){
-                array_push($completed_dlvy, $$completed_receive_dlvy[$re_count]);
+                array_push($completed_dlvy, $completed_receive_dlvy[$re_count]);
                 $re_count = $re_count+1;
                 // $completed_dlvy[$count] = $completed_receive_dlvy[$re_count];
             }elseif(!isset($completed_receive_dlvy[$re_count]) && !isset($completed_send_dlvy[$sen_count])){
@@ -108,12 +102,6 @@ class AppDlvyCompleteController extends Controller
         }
         return response()->json([
             'completed_dlvy' => $completed_dlvy,
-            // 'completed_send_dlvy' => $completed_send_dlvy,
-            // 'completed_receiver_name' => $completed_receiver_name,
-            // 'completed_receive_dlvy' => $completed_receive_dlvy,
-            // 'completed_sender_name'=>$completed_sender_name,
-            
-            
         ]);
     }
 }
