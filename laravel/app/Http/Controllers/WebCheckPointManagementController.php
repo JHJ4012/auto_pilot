@@ -25,19 +25,6 @@ class WebCheckPointManagementController extends Controller
 
         return response(['checkpoint_all' => DB::table('checkpoint')->get()]);
     }
-
-    // 채크포인트 마커 클릭
-    // public function show($id)
-    // {
-    //     debug($id);
-    //     $checkpoint_info = DB::table('checkpoint')
-    //                     ->where('checkpoint_id', $id)
-    //                     ->first();
-    //     debug($checkpoint_info);
-
-    //     return response(['checkpoint_info'=>$checkpoint_info]);
-    // }
-
     // 수정하기
     public function update(Request $request, $id)
     {

@@ -56,7 +56,7 @@ export default {
         },
         test6(){
             console.log('리스트 클릭')
-            Axios.get('/api/dlvy/checkpoint/후문/본관')
+            Axios.get('/api/dlvy/completedlvy/test/week/2020-06-01/2020-05-15')
             .then(response=>{
                 console.log(response.data)
             })

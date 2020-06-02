@@ -46,7 +46,7 @@ Route::get('dlvy/management/pathcheck/{id}', 'WebPathManagementController@show_p
 ///////////// APP /////////////
 // 로그인
 Route::post('app/login', 'AppLoginController@login_check' );
-// 메인
+// 메인  //
 // 호출하기
 Route::get('dlvy/call', 'AppCallController@call');
 // 동명이인 체크

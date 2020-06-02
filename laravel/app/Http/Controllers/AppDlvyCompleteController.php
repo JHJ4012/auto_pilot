@@ -36,39 +36,38 @@ class AppDlvyCompleteController extends Controller
         if($term=='all'){
             debug($date_start, $date_end);
             $completed_send_dlvy = DB::table('dlvy as d')
-                            ->select('d.dlvy_date', 'd.dlvy_status', 'd.dlvy_start_point', 'dlvy_end_point', 'u.user_name as receiver_name')
+                            ->select('d.dlvy_num', 'd.dlvy_date', 'd.dlvy_status', 'd.dlvy_start_point', 'dlvy_end_point', 'u.user_name as receiver_name')
                             ->LeftJoin('user as u','d.dlvy_receiver','=','u.user_id')
                             ->where('dlvy_sender', $id)
                             ->where('dlvy_status', '배달완료')
                             ->orderBy('dlvy_date', 'desc')
-                            ->paginate(3);
+                            ->get();
             $completed_receive_dlvy = DB::table('dlvy as d')
-                            ->select('d.dlvy_date', 'd.dlvy_status', 'd.dlvy_start_point', 'dlvy_end_point', 'u.user_name as sender_name')
+                            ->select('d.dlvy_num', 'd.dlvy_date', 'd.dlvy_status', 'd.dlvy_start_point', 'dlvy_end_point', 'u.user_name as sender_name')
                             ->LeftJoin('user as u','d.dlvy_sender','=','u.user_id')
                             ->where('dlvy_receiver', $id)
                             ->where('dlvy_status', '배달완료')
                             ->orderBy('dlvy_date', 'desc')
-                            ->paginate(3); 
+                            ->get();
             debug($completed_send_dlvy, $completed_receive_dlvy);
         }else{    
             $completed_send_dlvy = DB::table('dlvy as d')
-                               ->select('d.dlvy_date', 'd.dlvy_status', 'd.dlvy_start_point', 'dlvy_end_point', 'u.user_name as receiver_name')
+                               ->select('d.dlvy_num', 'd.dlvy_date', 'd.dlvy_status', 'd.dlvy_start_point', 'dlvy_end_point', 'u.user_name as receiver_name')
                                ->LeftJoin('user as u','d.dlvy_receiver','=','u.user_id')
                                ->where('d.dlvy_sender', $id)
                                ->where('d.dlvy_status', '배달완료')
                                ->whereBetween('d.dlvy_date', [$date_end, $date_start])
                                ->orderBy('d.dlvy_date', 'desc')
-                            //    ->orderBy('d.dlvy_call_start', 'desc')
-                               ->paginate(3);
+                               ->get();
 
             $completed_receive_dlvy = DB::table('dlvy as d')
-                            ->select('d.dlvy_date', 'd.dlvy_status', 'd.dlvy_start_point', 'dlvy_end_point', 'u.user_name as sender_name')
+                            ->select('d.dlvy_num', 'd.dlvy_date', 'd.dlvy_status', 'd.dlvy_start_point', 'dlvy_end_point', 'u.user_name as sender_name')
                             ->LeftJoin('user as u','d.dlvy_sender','=','u.user_id')
                             ->where('d.dlvy_receiver', $id)
                             ->where('d.dlvy_status', '배달완료')
                             ->whereBetween('d.dlvy_date', [$date_end, $date_start])
                             ->orderBy('d.dlvy_date', 'desc')
-                            ->paginate(3);
+                            ->get();
             debug($completed_send_dlvy, $completed_receive_dlvy);
         }
  
@@ -79,23 +78,29 @@ class AppDlvyCompleteController extends Controller
         
         while(TRUE){
             if(isset($completed_receive_dlvy[$re_count]) && isset($completed_send_dlvy[$sen_count])){
-                if($completed_send_dlvy[$sen_count]->dlvy_date >= $completed_receive_dlvy[$re_count]->dlvy_date){
+                if($completed_send_dlvy[$sen_count]->dlvy_date == $completed_receive_dlvy[$re_count]->dlvy_date){
+                    debug($completed_send_dlvy[$sen_count]->dlvy_num, $completed_receive_dlvy[$re_count]->dlvy_num);
+                    if($completed_send_dlvy[$sen_count]->dlvy_num > $completed_receive_dlvy[$re_count]->dlvy_num){
+                        array_push($completed_dlvy, $completed_send_dlvy[$sen_count]);
+                        $sen_count = $sen_count+1;
+                    }else{
+                        array_push($completed_dlvy, $completed_receive_dlvy[$re_count]);
+                        $re_count = $re_count+1;
+                    }
+                }
+                if($completed_send_dlvy[$sen_count]->dlvy_date > $completed_receive_dlvy[$re_count]->dlvy_date){
                     array_push($completed_dlvy, $completed_send_dlvy[$sen_count]);
                     $sen_count = $sen_count+1;
-                    // $completed_dlvy[$count] = $completed_send_dlvy[$sen_count];
                 }else{
                     array_push($completed_dlvy, $completed_receive_dlvy[$re_count]);
                     $re_count = $re_count+1;
-                    // $completed_dlvy[$count] = $completed_receive_dlvy[$re_count];
                 }
             }elseif(!isset($completed_receive_dlvy[$re_count]) && isset($completed_send_dlvy[$sen_count])){
                 array_push($completed_dlvy, $completed_send_dlvy[$sen_count]);
                 $sen_count = $sen_count+1;
-                // $completed_dlvy[$count] = $completed_send_dlvy[$sen_count];
             }elseif(isset($completed_receive_dlvy[$re_count]) && !isset($completed_send_dlvy[$sen_count])){
                 array_push($completed_dlvy, $completed_receive_dlvy[$re_count]);
                 $re_count = $re_count+1;
-                // $completed_dlvy[$count] = $completed_receive_dlvy[$re_count];
             }elseif(!isset($completed_receive_dlvy[$re_count]) && !isset($completed_send_dlvy[$sen_count])){
                 break;
             }

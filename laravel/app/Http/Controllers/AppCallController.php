@@ -27,19 +27,6 @@ class AppCallController extends Controller
         return response($same_user);
     }
 
-    // qr_code
-    public function qr_user_check($id){
-        $qr_user = DB::table('dlvy')
-                        ->select('dlvy_sender','dlvy_receiver')
-                        ->where('dlvy_num', $id)
-                        ->first();
-
-        return response()->json([
-            'qr_receiver' => $qr_user->dlvy_receiver,
-            'qr_sender' => $qr_user->dlvy_sender
-        ]);
-    }
-
     // 채크포인트
     public function dlvy_checkpoint($start_point, $end_point){
         debug($start_point, $end_point);
@@ -50,10 +37,8 @@ class AppCallController extends Controller
 
         return $checkpoint = DB::table('checkpoint')
                     ->select('checkpoint_id','checkpoint_lat', 'checkpoint_lon')
-                    ->join('path_check', (fn($join)=>
-                            $join->on('checkpoint.checkpoint_id','=','path_check.check_id')
-                                ->where('path_check.path_col_id', $path_id)
-                    ))
+                    ->join('path_check', 'checkpoint.checkpoint_id', '=','path_check.check_id')
+                    ->where('path_col_id', $path_id)
                     ->get();
         
     }

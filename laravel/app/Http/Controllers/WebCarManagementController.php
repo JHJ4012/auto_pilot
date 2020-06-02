@@ -26,17 +26,6 @@ class WebCarManagementController extends Controller
         return response(['car_all'=> DB::table('car')->select('car_num','car_name')->get()]);
     }
 
-    //
-    // public function show($id)
-    // {
-    //     debug($id);
-    //     $car_info = DB::table('car')
-    //                     ->where('car_num', $id)
-    //                     ->first();
-    //     debug($car_info);
-    //     return response(['car__info'=>$car_info]);
-    // }
-
     // 수정하기
     public function update(Request $request, $id)
     {

@@ -9,38 +9,16 @@ use Carbon\Carbon;
 // 웹 통계 페이지 컨트롤러
 class WebStatisticsController extends Controller
 {
-        ////////////    # 날짜 받아서 해당 날짜 전날 표시
-        // $dt = date('Y-m-d');
-        // $dayy = date('Y-m-d', strtotime("$dt -1 day"));
-        // debug($dt);
-        ////////////    # 주 받아서 해당 주 전 주 표시
-        // $week_first = strtotime($dt) - (date('w',strtotime($dt)) * 86400);  // 해당 주 일요일
-        // $week_end = $week_first + (6*86400);    // 해당 주 토요일
-        // $last_week_start = date('Y-m-d', $week_first - (86400 * 7));    // 지난 주 일요일
-        // $last_week_end = date('Y-m-d', $week_end - (86400 * 7));    // 지난 주 토요일
-        // debug($week_first, $week_end, $last_week_start, $last_week_end);
-        ////////////    # 달 받아서 해당 달 전달 표시
-        // $d = mktime(0,0,0, date("m"), 1, date("Y")); //해당 달 1일
-        // $prev_month = strtotime("$dt",$d); //해당 달
-        // $last_month_start = date("Y-m-01", $prev_month);    //해당 달 1일
-        // $last_month_end = date("Y-m-t", $prev_month);   // 해당 달 마지막 일
-        // debug($last_month_start, $last_month_end);
-        ////////////
 
     
     #배달 완료 건 수 배달 완료 누적/평균
     public function divy_complete($mode="acc", $term="day", $date='0'){
+        // mode = acc, avg
+        // term = day, week, month
         debug($mode, $term, $date);
         $statis_info =array();
         $date_info = array();
-        // mode = acc, avg
-        // term = day, week, month
-        // if($date == '0'){
-        //     $dt = date('Y-m-d', strtotime('-1 day'));    // 하루 전
-        //     $mt = date('Y-m', strtotime('-1 month'));   // 지난 달
-        //     $week_first = strtotime($dt) - (date('w',strtotime($dt)) * 86400 + (86400*7));  // 지난 주 일요일
-        //     $week_end = $week_first + (6*86400);    // 지난 주 토요일
-        // }else{}
+        
             $dt = date('Y-m-d', strtotime($date));    // 해당 날짜
             $mt = date('Y-m', strtotime($date));    // 해당 달
             $week_first = strtotime($dt) - (date('w',strtotime($dt)) * 86400);  // $dt에 해당하는 주의 일요일
@@ -131,16 +109,16 @@ class WebStatisticsController extends Controller
         ]);
     }
 
-
     # 대기 완료/취소 건 수
     public function wait_and_cancle($mode="acc", $term="day", $date='0'){
+        // mode = acc, avg
+        // term = day, week, month
         // 대기 완료/취소
         debug($mode, $term, $date);
         $wait_count =array();
         $wait_cancel = array();
         $date_info = array();
-        // mode = acc, avg
-        // term = day, week, month
+        
         if($date == '0'){   // 날짜 선택x 디폴트 (어제, 지난 주, 지난 달 기준)
             $dt = date('Y-m-d', strtotime('-1 day'));    // 하루 전
             $mt = date('Y-m', strtotime('-1 month'));    // 지난 달
@@ -262,11 +240,11 @@ class WebStatisticsController extends Controller
 
     # 평균 대기 시간
     public function wait_time_avg($term="day", $date='0'){
-        debug($term, $date);
-        $statis_info =array();
-        $date_info = array();
         // mode = acc, avg
         // term = day, week, month
+        $statis_info =array();
+        $date_info = array();
+       
         if($date == '0'){
             $dt = date('Y-m-d', strtotime('-1 day'));    // 하루 전
             $mt = date('Y-m', strtotime('-1 month'));   // 지난 달
@@ -283,7 +261,6 @@ class WebStatisticsController extends Controller
         if($term == 'day'){         # 하루별 평균 대기 시간
             for($i=0; $i<9; $i++)
             { 
-
                 $day = date('Y-m-d', strtotime("$dt -$i day"));
 
                 $statis_data = DB::table('dlvy')
