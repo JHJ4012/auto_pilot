@@ -7,7 +7,7 @@ To solve this problem, we came to plan the autopilot delivery service called "**
 # BariBari
 ### user (APP)
 Sender calls a RC car through the app, put somethings to send in RC cars, and order RC cars to deliver to destination.
-When the RC car arrives at its destination, the Recipient receive the goods sent to him using QR code.
+When the RC car arrives at its destination, the recipient receive the goods sent to him using QR code.
 ### manager (WEB)
 Managers can check the status of delivery or the status and location of RC car in real time. And also can see statistics of this service or manage stations or RC cars or path. 
 
@@ -17,20 +17,39 @@ Managers can check the status of delivery or the status and location of RC car i
 - Back-end: Laravel, Node.JS (Socket.IO), MySQL
 - Front-end: Vue.JS, bootstrap, Kakao map API
 - App : Android
-- Hardware : Raspberry PI 4, Arduino DUE, ROS, RTK-GPS
+- Hardware : Raspberry PI 4, Arduino DUE, ROS, RTK-GPS, Lidar
 
 
 # the part in charge
 
 **Web** 
-- Control page (check the status of this service in real-time)
-- Statistics page (see statistics of this service)
-- Error notice(when occur the error to RC car can see error message)
+- Control page
+	- check the status of RC car's operation
+	- check the status of delivery
+	- check the status of waiting delivery
+	- check the average of waiting time
+	- check most called building's rank
+	- track RC cars and check delivery information of RC cars on Map
+	- check station's location on Map
+- Statistics page (mode : accumulation, average / term : day, week, month)
+	- completed delivery
+	- completed waiting and canceled waiting
+	- average of waiting time
+- Error notice
+	- when occur error to RC car, show up the error notification 
 
 **App**
- - Call activity(Call and order RC car to deliver)
- - QR code activity ( generate QR code with delivery's information)
+ - Call activity
+	 - select start point, end point on map, and recipient
+	 - order deliver to RC car
+ - QR code activity
+	 - generate QR code with delivery's information
   
 **Hardware**
- - Use ROS on Raspberry PI 4(Ubuntu 18.04) and connect this with Arduino(RC car)
- - Make autopilot's algorithm(using RTK-GPS and azimuth)
+ - ROS
+	 - Use ROS on Raspberry PI 4(Ubuntu 18.04)
+	 - connect Arduino DUE (RC car)
+ - Make autopilot's algorithm
+	 - use RTK-GPS
+	 - use azimuth difference between two location
+	 - use Lidar to avoid obstacles
