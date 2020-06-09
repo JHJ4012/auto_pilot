@@ -25,7 +25,7 @@ Managers can check the status of delivery or the status and location of RC car i
 **Web** 
 - Control page (check the status of this service in real-time)
 - Statistics page (see statistics of this service)
-- Error notice(when occur the error to RC car)
+- Error notice(when occur the error to RC car can see error message)
 
 **App**
  - Call activity(Call and order RC car to deliver)
