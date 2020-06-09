@@ -24,13 +24,13 @@ Managers can check the status of delivery or the status and location of RC car i
 
 **Web** 
 - Control page
-	- check the status of RC car's operation
-	- check the status of delivery
-	- check the status of waiting delivery
-	- check the average of waiting time
-	- check most called building's rank
-	- track RC cars and check delivery information of RC cars on Map
-	- check station's location on Map
+	- present the status of RC car's operation in real time
+	- present the status of delivery in real time
+	- present the status of waiting delivery in real time
+	- present the average of waiting time in real time
+	- present most called building's rank
+	- track RC cars and present delivery information of RC cars on Map in real time
+	- present station's location on Map in real time
 - Statistics page (mode : accumulation, average / term : day, week, month)
 	- completed delivery
 	- completed waiting and canceled waiting
@@ -40,15 +40,17 @@ Managers can check the status of delivery or the status and location of RC car i
 
 **App**
  - Call activity
-	 - select start point, end point on map, and recipient
+	 - present stations. and user can select start point, end point by clicking station markers.
+     - search recipient with his name
 	 - order deliver to RC car
  - QR code activity
 	 - generate QR code with delivery's information
+     - And order next work to RC car (go to destination / end delivery)
   
 **Hardware**
  - ROS
 	 - Use ROS on Raspberry PI 4(Ubuntu 18.04)
-	 - connect Arduino DUE (RC car)
+	 - connect Arduino DUE(RC car) with ROS on Raspberry PI 4
  - Make autopilot's algorithm
 	 - use RTK-GPS
 	 - use azimuth difference between two location
