@@ -83,7 +83,7 @@ public class ReceiveFragment extends Fragment {
     }
 
     private void prepareData() {
-        new JSONTask().execute("https://b8c98bce1df6.ngrok.io/api/dlvy/receivdlvy/"+user_id);
+        new JSONTask().execute("http://66ac99181487.ngrok.io/api/dlvy/receivdlvy/"+user_id);
     }
 
     public class JSONTask extends AsyncTask<String, String, String> {

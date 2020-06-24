@@ -33,6 +33,10 @@ var body_msg; // message
 io.on('connection', (socket) => {
     console.log('one user connection // ' + socket.id);
 
+    socket.on('test', (data) => {
+        console.log(data);
+    })
+    
     // Delivery Call
     socket.on('dlvy_call', (data) => { 
 
@@ -104,16 +108,29 @@ io.on('connection', (socket) => {
                 dlvy_data.dlvy_num = data.dlvy_num; 
                 dlvy_data.car_num = data.car_num; 
 
+                var start_point;
+                var end_point;
+
                 // Deliver the work to the car
                 connection.query(`select dlvy_start_point, dlvy_end_point from dlvy where dlvy_num = ${data.dlvy_num}`, (err, rows, fields) => {
+                    start_point = rows[0].dlvy_start_point;
+                    end_point = rows[0].dlvy_end_point;
                     // Get checkpoint gps
                     connection.query(`SELECT c.checkpoint_lat, c.checkpoint_lon 
                                     FROM path_check as pc left join checkpoint as c on pc.check_id = c.checkpoint_id 
                                     where pc.path_col_id in 
                                         ( select path_id from path where path_start_point = "${rows[0].dlvy_start_point}" and path_end_point = "${rows[0].dlvy_end_point}") 
                                     order by sequence asc;`, (err, rows, fields) => {                        
-
-                        // io.emit('dlvy_start_data', dlvy_data);
+                        dlvy_data.check_point_gps = rows;
+                        
+                        connection.query(`select station_lat, station_lon from station where station_name = "${start_point}"`, (err, rows, fields) => {
+                            dlvy_data.start_point_gps = rows;
+                            connection.query(`select station_lat, station_lon from station where station_name = "${end_point}"`, (err, rows, fields) => {
+                                dlvy_data.end_point_gps = rows;
+                                // console.log(dlvy_data);
+                                io.emit('dlvy_start_data', dlvy_data);
+                            });
+                        });
                     });
                 });    
              
@@ -401,7 +418,16 @@ io.on('connection', (socket) => {
             io.emit('car_err', car_data);
         });
     });
-
+    socket.on('QR_code', (data) => {
+        var qr_status = new Object();
+    
+        connection.query(`select dlvy_status from dlvy where dlvy_num = ${data.dlvy_num} and (dlvy_sender = '${data.user_id}' or dlvy_receiver = '${data.user_id}')`, (err, rows, fields) => {
+            if(rows.length >= 1) qr_status.msg = 'true';
+            else qr_status.msg = 'false';
+    
+            io.emit('QR_status', qr_status);
+        })
+    });
 });
 
 // Save to Call Operation Database
