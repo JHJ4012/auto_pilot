@@ -81,7 +81,7 @@ public class SendListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                             }
 
                             try {
-                                mSocket = IO.socket( "http://2a8069e63422.ngrok.io" );
+                                mSocket = IO.socket( "https://6a6723c32479.ngrok.io" );
                             } catch(URISyntaxException e) {
                                 throw new RuntimeException(e);
                             }

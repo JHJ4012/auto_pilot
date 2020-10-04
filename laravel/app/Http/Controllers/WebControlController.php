@@ -27,20 +27,22 @@ class WebControlController extends Controller
         # in service rc car
         $proceeding_rc = DB::table('car')   
                         ->select('car_num')
-                        ->where('car_status', '호출중')
-                        ->orwhere('car_status', '배달중')
+                        ->where('car_status', "呼び出し中")
+                        ->orwhere('car_status', "配達中")
                         ->count();   
+        
         # Operable rc car
         $waiting_rc = DB::table('car')   
                     ->select('car_num')
-                    ->where('car_status', '배달대기')
+                    ->where('car_status', "配達待機")
                     ->count();
+
         # Error rc car
         $error_rc = DB::table('car')    
                     ->select('car_num')
-                    ->where('car_status', '오류')
+                    ->where('car_status', "エラー")
                     ->count();
-        
+                          
         // Present to delivery status
         # Total Calls Last Month
         $call_count_month_ago = DB::table('dlvy')
@@ -58,7 +60,7 @@ class WebControlController extends Controller
         $complete_call = DB::table('dlvy')  
             ->select('dlvy_num')
             ->whereRaw('dlvy_date >= curdate()')
-            ->where('dlvy_status','=',  '배달완료')
+            ->where('dlvy_status','=',  "配達完了")
             ->count();
                         
         // Standby Cancellation Status     
@@ -72,14 +74,14 @@ class WebControlController extends Controller
         $now_waiting = DB::table('dlvy')  
                         ->select('dlvy_num')
                         ->whereRaw('dlvy_date >= curdate()')
-                        ->where('dlvy_status', '=', '대기중')
+                        ->where('dlvy_status', '=', "待機中")
                         ->count();
 
         # Today's Wait Cancellation Count
         $canceled_waiting = DB::table('dlvy')   
                         ->select('dlvy_num')
                         ->whereRaw('dlvy_date >= curdate()')
-                        ->where('dlvy_status', '=','대기취소')
+                        ->where('dlvy_status', '=',"待機キャンセル")
                         ->count();
                         
         // Last week's Calling Building Rank
@@ -147,7 +149,6 @@ class WebControlController extends Controller
             # Map - stop, RC car location, name display
             'map_car_status' => $map_car_status,    # rc car information
             'station_info' => $station_info,       # station information
-
         ]);
     }
     // Driving information when you click the marker of the rc car on the map
@@ -159,7 +160,7 @@ class WebControlController extends Controller
                         ->where('car_num', $id)
                         ->first();
         # if on delivery  rc car
-        if($car->car_status ==="배달중" || $car->car_status==="호출중" ){
+        if($car->car_status ==="配達中" || $car->car_status==="呼び出し中" ){
 
             # Error, Call time, departure time to end point by start point
             $dlvy_status = DB::table('dlvy') 

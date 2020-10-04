@@ -67,7 +67,7 @@ public class QRCodeActivity extends AppCompatActivity {
     public void onClick(View view){
         if(view.getId() == R.id.control_button){    //when user click control button
             try{
-                socket = IO.socket("http://2a8069e63422.ngrok.io");
+                socket = IO.socket("https://6a6723c32479.ngrok.io");
             }catch(URISyntaxException e){
                 throw new RuntimeException(e);
             }

@@ -6,18 +6,18 @@ To solve this problem, we came to plan the autopilot delivery service called "**
 
 # BariBari
 ### user (APP)
-Sender calls a RC car through the app, put somethings to send in RC cars, and order RC cars to deliver to destination.
+Sender calls a RC car through the app, put somethings to send in RC cars, and order to RC cars to deliver to destination.
 When the RC car arrives at its destination, the recipient receive the goods sent to him using QR code.
 ### manager (WEB)
 Managers can check the status of delivery or the status and location of RC car in real time. And also can see statistics of this service or manage stations or RC cars or path. 
 
 # Tech/framework used
 
-- OS: Windows, Ubuntu, AWS
-- Back-end: Laravel, Node.JS (Socket.IO), MySQL
+- OS: Windows, Ubuntu, AWS EC2
+- Back-end: PHP(Laravel), Node.JS (Socket.IO), MySQL
 - Front-end: Vue.JS, bootstrap, Kakao map API
 - App : Android
-- Hardware : Raspberry PI 4, Arduino DUE, ROS, RTK-GPS, Lidar
+- Hardware : Raspberry PI 4, Arduino DUE, RTK-GPS, Lidar, ROS, Python
 
 
 # the part in charge
@@ -40,8 +40,8 @@ Managers can check the status of delivery or the status and location of RC car i
 
 **App**
  - Call activity
-	 - present stations. and user can select start point, end point by clicking station markers.
-     - search recipient with his name
+	 - present the stations. and user can select start point, end point by clicking station markers.
+     - search recipient with name
 	 - order deliver to RC car
  - QR code activity
 	 - generate QR code with delivery's information
@@ -49,9 +49,11 @@ Managers can check the status of delivery or the status and location of RC car i
   
 **Hardware**
  - ROS
-	 - Use ROS on Raspberry PI 4(Ubuntu 18.04)
+	 - Used ROS on Raspberry PI 4(Ubuntu 18.04)
 	 - connect Arduino DUE(RC car) with ROS on Raspberry PI 4
  - Make autopilot's algorithm
-	 - use RTK-GPS
-	 - use azimuth difference between two location
-	 - use Lidar to avoid obstacles
+	 - used RTK-GPS
+	 - used azimuth difference between two location
+	 - used Lidar to avoid obstacles
+
+![Alt text](/reference/car.png "Car")

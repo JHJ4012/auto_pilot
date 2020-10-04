@@ -136,7 +136,7 @@ class WebStatisticsController extends Controller
                                     ->count('dlvy_wait_time');
                     $statis_data_cancel = DB::table('dlvy')
                                     ->where('dlvy_date', $day)
-                                    ->where('dlvy_status', '대기취소')
+                                    ->where('dlvy_status', '待機キャンセル')
                                     ->count('dlvy_status');
                     $date_info[$i] = $day;
                     $wait_count[$i] = $statis_data_count;  
@@ -155,7 +155,7 @@ class WebStatisticsController extends Controller
                                 ->count('dlvy_wait_time');
                     $statis_data_cancel = DB::table('dlvy')
                                 ->whereBetween('dlvy_date', [$last_week_start, $last_week_end])
-                                ->where('dlvy_status', '대기취소')
+                                ->where('dlvy_status', '待機キャンセル')
                                 ->count('dlvy_status');
                     $date_info[$i] = "$last_week_start~$last_week_end";
                     $wait_count[$i] = $statis_data_count;  
@@ -176,7 +176,7 @@ class WebStatisticsController extends Controller
                                 ->count('dlvy_wait_time');
                     $statis_data_cancel = DB::table('dlvy')
                                 ->whereBetween('dlvy_date', [$last_month_start, $last_month_end])
-                                ->where('dlvy_status', '대기취소')
+                                ->where('dlvy_status', '待機キャンセル')
                                 ->count('dlvy_status');
                     $date_info[$i] = date('Y-m', $prev_month);
                     $wait_count[$i] = $statis_data_count;  
@@ -198,7 +198,7 @@ class WebStatisticsController extends Controller
                                 ->count('dlvy_wait_time');
                     $statis_data_cancel = DB::table('dlvy')
                                 ->whereBetween('dlvy_date', [$last_week_start, $last_week_end])
-                                ->where('dlvy_status', '대기취소')
+                                ->where('dlvy_status', '待機キャンセル')
                                 ->count('dlvy_status');
                     $date_info[$i] = "$last_week_start~$last_week_end";
                     $wait_count[$i] = round($statis_data_count / 7, 2);  
@@ -220,7 +220,7 @@ class WebStatisticsController extends Controller
                                 ->count('dlvy_wait_time');
                     $statis_data_cancel = DB::table('dlvy')
                                 ->whereBetween('dlvy_date', [$last_month_start, $last_month_end])
-                                ->where('dlvy_status', '대기취소')
+                                ->where('dlvy_status', '待機キャンセル')
                                 ->count('dlvy_status');
                     $date_info[$i] = date('Y-m', $prev_month);
                     $wait_count[$i] = round($statis_data_count / 7, 2);  

@@ -78,7 +78,7 @@ public class CallActivity extends AppCompatActivity implements MapView.POIItemEv
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_call);
 
-        new GetStation().execute("http://66ac99181487.ngrok.io/api/dlvy/call");  //execute http connection for station's info
+        new GetStation().execute("https://dd8dbed040e6.ngrok.io/api/dlvy/call");  //execute http connection for station's info
 
         relativeLayout = findViewById( R.id.relativeLayout );   //
         animTransUp = AnimationUtils.loadAnimation( this, R.anim.translate_up );    //
@@ -136,7 +136,7 @@ public class CallActivity extends AppCompatActivity implements MapView.POIItemEv
             endPoint = mapPOIItem.getItemName();
             selected_end.setText(mapPOIItem.getItemName());
 
-            new GetCheck().execute("http://66ac99181487.ngrok.io/api/dlvy/checkpoint/"+startPoint+"/"+endPoint);   //execute http connection for checkpoint's info
+            new GetCheck().execute("https://dd8dbed040e6.ngrok.io/api/dlvy/checkpoint/"+startPoint+"/"+endPoint);   //execute http connection for checkpoint's info
             pd = ProgressDialog.show(this, "로딩중", "경로 탐색 중입니다...");                 //progressdialog show
 
             for(int i = 0 ; i < markers.size(); i++){   //delete all markers execept selected markers
@@ -203,7 +203,7 @@ public class CallActivity extends AppCompatActivity implements MapView.POIItemEv
                 }
 
                 try{
-                    socket = IO.socket("http://2a8069e63422.ngrok.io");
+                    socket = IO.socket("https://6a6723c32479.ngrok.io");
                 }catch(URISyntaxException e){
                     throw new RuntimeException(e);
                 }

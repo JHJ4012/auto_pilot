@@ -72,7 +72,7 @@ public class SignUpActivity extends AppCompatActivity {
         button_signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new JSONTask().execute("http://66ac99181487.ngrok.io"); // Start AsyncTask
+                new JSONTask().execute("https://dd8dbed040e6.ngrok.io"); // Start AsyncTask
             }
         });
     }

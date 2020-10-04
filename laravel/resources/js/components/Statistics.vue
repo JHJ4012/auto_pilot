@@ -1,42 +1,32 @@
 <template>
+<div class="background">
     <div class="container">
         <div class="left_container">
-            <div class="left_container_item1">     <!--category -->
-                <b-card
-                    header="카테고리"
-                    header-tag="header"
-                    style="max-width: 14rem;text-align:center;"
-                    class="mb-2">
-                    <b-button class="button" @click="categori_change('complete')">
-                        배달 완료 건 수
+            <div class="left_container_item1">    <!--category -->
+            <div id="category_header">配達</div>
+
+                <div id="category_body">
+                    <div style="margin-bottom:5px;">
+                    <b-button variant="primary" class="button0" @click="categori_change('complete')">
+                        配達完了件数
                     </b-button>
-                    <b-button class="button" @click="categori_change('waiting_status')">
-                        대기 완료 / 취소 건 수
+                    </div>
+                    <div style="margin-bottom:5px;">
+                    <b-button variant="primary" class="button0" @click="categori_change('waiting_status')">
+                        待機完了/キャンセル
                     </b-button>
-                    <b-button class="button" @click="categori_change('waiting_time_avg')">
-                        평균 대기 시간
+                    </div>
+                    <div>
+                    <b-button variant="primary" class="button0" @click="categori_change('waiting_time_avg')">
+                        平均待機時間
                     </b-button>
-                </b-card>                         <!-- category -->
+                    </div>
+                </div>                         <!-- category -->
             </div>
         </div>
         <div class="right_container">
-            <div class="right_container_item1">   <!-- margin -->
-            </div>
-            <div class="right_container_item2">    <!-- chart header, datepicker, button, body -->  
-                <div class="right_container_item2_left">
-                    <div class="right_container_item2_header">  <!-- chart header -->
-                        {{categori}}
-                    </div>
-                    <div class="right_container_item2_header2">
-                        <div class="right_container_item2_item1"> <!-- chart Accumulation, average button -->
-                            <b-button variant= "success" class ="chart_button" @click="clicked('acc', term)" v-if="term != 'day' & categori != '평균 대기 시간'">
-                                    누적
-                            </b-button>
-                            <b-button variant="info" class ="chart_button" @click="clicked('avg', term)" v-if="term != 'day' & categori != '평균 대기 시간'">
-                                    평균
-                            </b-button>
-                            </div>
-                        <div class="right_container_item2_item2">  <!-- chart datepicker -->
+            <div class="right_container_item1">
+                <div id="datepicker">  <!-- chart datepicker -->
                             <vc-date-picker
                                 v-if="term=='day'"
                                 v-model="date"
@@ -59,25 +49,42 @@
                                 :max="new Date(today.getFullYear(), today.getMonth()-1,1)"
                                 v-model="selected_month"
                                 />
-                        </div>
-                        <div class="right_container_item2_item3"> <!-- chart day, week, month button -->
-                            <b-button variant="info" class ="chart_button" @click="clicked(mode, 'day')">
-                                일간
-                            </b-button>
-                            <b-button variant="info" class ="chart_button" @click="clicked(mode, 'week')">
-                                주간
-                            </b-button>
-                            <b-button variant="info" class ="chart_button" @click="clicked(mode, 'month')">
-                                월간
-                            </b-button>
-                        </div>
-                    </div>
-                                <bar-chart
-                                :chart-data="datacollection"/>
-                    </div>        
+                </div>  
+                 <div id="buttons1">
+                                <b-button variant="primary" class ="chart_button" @click="clicked(mode, 'day')">
+                                    日間
+                                </b-button>
+                                <b-button  variant="primary" class ="chart_button" @click="clicked(mode, 'week')">
+                                    週間
+                                </b-button>
+                                <b-button  variant="primary" class ="chart_button" @click="clicked(mode, 'month')">
+                                    月間
+                                </b-button>
+                </div>
             </div>
+               
+            <div class="right_container_item2">    <!-- chart header, datepicker, button, body -->  
+                <div id="buttons2">
+                     <b-button variant= "primary" class ="chart_button" @click="clicked('acc', term)" v-if="term != 'day' & categori != '平均待機時間'">
+                                    累積
+                            </b-button>
+                            <b-button variant="primary" class ="chart_button" @click="clicked('avg', term)" v-if="term != 'day' & categori != '平均待機時間'">
+                                    平均
+                            </b-button>
+                </div>       
+                <div id="chart_header">  <!-- chart header -->
+                        {{categori}}
+                </div>
+                <div id="chart">
+                <bar-chart
+                                :chart-data="datacollection"/>
+                        
+                </div>     
+            </div>
+
         </div>
     </div>
+</div>
 </template>
 <script>
 import BarChart from './Bar_Chart.js';
@@ -86,7 +93,7 @@ import VueMonthlyPicker from 'vue-monthly-picker'
     export default {
         data(){
             return {
-                categori : '배달 완료',
+                categori : '配達完了',
                 date : new Date(),  //graph's date
                 today : new Date(), //today's date
                 for_week_disable : '', //disabled week
@@ -136,11 +143,11 @@ import VueMonthlyPicker from 'vue-monthly-picker'
         methods : {
             categori_change(val){                       //change categori
                 if(val == 'complete'){
-                    this.categori = "배달 완료";
+                    this.categori = "配達完了";
                 }else if(val == 'waiting_status'){
-                    this.categori = "대기 완료/취소";
+                    this.categori = "待機完了・キャンセル";
                 }else if(val == 'waiting_time_avg'){
-                    this.categori = "평균 대기 시간";
+                    this.categori = "平均待機時間";
                 }
                 this.mode = "acc"
                 this.term = "day"
@@ -152,7 +159,7 @@ import VueMonthlyPicker from 'vue-monthly-picker'
                 this.loaded(); 
             },
             selected(day){  //user selected date
-                if(this.categori == "배달 완료"){   //when categori is completed delivery
+                if(this.categori == "配達完了"){   //when categori is completed delivery
                     if(this.term == 'day'){     //when term is day
                         Axios.get('/api/dlvy/statistics/complete/'+this.mode+'/'+this.term+'/'+this.getFormDate(day.date))   
                         .then((response) => {
@@ -162,7 +169,7 @@ import VueMonthlyPicker from 'vue-monthly-picker'
                                     labels : this.complete_date,
                                     datasets: [
                                         {
-                                            label : '배달 완료 건 수',
+                                            label : '配達完了件数',
                                             backgroundColor: '#f87979',
                                             data : this.complete_number
                                         },
@@ -183,7 +190,7 @@ import VueMonthlyPicker from 'vue-monthly-picker'
                         }
                         this.loaded();
                     }
-                }else if(this.categori == "대기 완료/취소"){    //when categori is waiting info
+                }else if(this.categori == "待機完了・キャンセル"){    //when categori is waiting info
                     if(this.term == 'day'){ //when term is day
                         Axios.get('/api/dlvy/statistics/waitcancel/'+this.mode+'/'+this.term+'/'+this.getFormDate(day.date))
                         .then((response) => {
@@ -194,12 +201,12 @@ import VueMonthlyPicker from 'vue-monthly-picker'
                                 labels : this.waiting_status_date,
                                 datasets: [
                                     {
-                                        label : '대기 완료 건 수',
+                                        label : '待機完了件数',
                                         backgroundColor: '#f87979',
                                         data : this.waiting_complete
                                     },
                                     {
-                                        label : '대기 취소 건 수',
+                                        label : '待機キャンセル件数',
                                         backgroundColor : '#2E2EFE',
                                         data : this.waiting_cancel
                                     }
@@ -217,7 +224,7 @@ import VueMonthlyPicker from 'vue-monthly-picker'
                         }
                         this.loaded();
                     }
-                }else if(this.categori == "평균 대기 시간"){    //when categori is average waiting time
+                }else if(this.categori == "平均待機時間"){    //when categori is average waiting time
                     if(this.term == 'day'){
                         Axios.get('/api/dlvy/statistics/waittimeavg/'+this.term+'/'+this.getFormDate(day.date))
                         .then((response) => {
@@ -227,7 +234,7 @@ import VueMonthlyPicker from 'vue-monthly-picker'
                                 labels : this.wait_time_avg_date,
                                 datasets: [
                                     {
-                                        label : '평균 대기 시간',
+                                        label : '平均待機時間',
                                         backgroundColor: '#f87979',
                                         data : this.wait_time_avg
                                     },
@@ -260,7 +267,7 @@ import VueMonthlyPicker from 'vue-monthly-picker'
                 return  year + '-' + month + '-' + day;
             },
             loaded(){       //graph load method
-                if(this.categori == "배달 완료"){
+                if(this.categori == "配達完了"){
                     if(this.term=='day'){
                         Axios.get('/api/dlvy/statistics/complete/'+this.mode+'/'+this.term+'/'+this.getFormDate(this.date))
                         .then((response) => {
@@ -270,7 +277,7 @@ import VueMonthlyPicker from 'vue-monthly-picker'
                                 labels : this.complete_date,
                                 datasets: [
                                     {
-                                        label : '배달 완료 건 수',
+                                        label : '配達完了件数',
                                         backgroundColor: '#f87979',
                                         data : this.complete_number
                                     },
@@ -289,7 +296,7 @@ import VueMonthlyPicker from 'vue-monthly-picker'
                                 labels : this.complete_date,
                                 datasets: [
                                     {
-                                        label : '배달 완료 건 수',
+                                        label : '配達完了件数',
                                         backgroundColor: '#f87979',
                                         data : this.complete_number
                                     },
@@ -309,7 +316,7 @@ import VueMonthlyPicker from 'vue-monthly-picker'
                                 labels : this.complete_date,
                                 datasets: [
                                     {
-                                        label : '배달 완료 건 수',
+                                        label : '配達完了件数',
                                         backgroundColor: '#f87979',
                                         data : this.complete_number
                                     },
@@ -320,7 +327,7 @@ import VueMonthlyPicker from 'vue-monthly-picker'
                             console.log(error);
                         });
                     }
-                }else if(this.categori == "대기 완료/취소"){
+                }else if(this.categori == "待機完了・キャンセル"){
                     if(this.term=='day'){
                         Axios.get('/api/dlvy/statistics/waitcancel/'+this.mode+'/'+this.term+'/'+this.getFormDate(this.date)) 
                         .then((response) => {
@@ -331,12 +338,12 @@ import VueMonthlyPicker from 'vue-monthly-picker'
                                 labels : this.waiting_status_date,
                                 datasets: [
                                     {
-                                        label : '대기 완료 건 수',
+                                        label : '待機完了件数',
                                         backgroundColor: '#f87979',
                                         data : this.waiting_complete
                                     },
                                     {
-                                        label : '대기 취소 건 수',
+                                        label : '待機キャンセル件数',
                                         backgroundColor : '#2E2EFE',
                                         data : this.waiting_cancel
                                     }
@@ -356,12 +363,12 @@ import VueMonthlyPicker from 'vue-monthly-picker'
                                 labels : this.waiting_status_date,
                                 datasets: [
                                     {
-                                        label : '대기 완료 건 수',
+                                        label : '待機完了件数',
                                         backgroundColor: '#f87979',
                                         data : this.waiting_complete
                                     },
                                     {
-                                        label : '대기 취소 건 수',
+                                        label : '待機キャンセル件数',
                                         backgroundColor : '#2E2EFE',
                                         data : this.waiting_cancel
                                     }
@@ -382,12 +389,12 @@ import VueMonthlyPicker from 'vue-monthly-picker'
                                 labels : this.waiting_status_date,
                                 datasets: [
                                     {
-                                        label : '대기 완료 건 수',
+                                        label : '待機完了件数',
                                         backgroundColor: '#f87979',
                                         data : this.waiting_complete
                                     },
                                     {
-                                        label : '대기 취소 건 수',
+                                        label : '待機キャンセル件数',
                                         backgroundColor : '#2E2EFE',
                                         data : this.waiting_cancel
                                     }
@@ -398,7 +405,7 @@ import VueMonthlyPicker from 'vue-monthly-picker'
                             console.log(error);
                         });
                     }
-                }else if(this.categori == "평균 대기 시간"){
+                }else if(this.categori == "平均待機時間"){
                     if(this.term=='day'){
                         Axios.get('/api/dlvy/statistics/waittimeavg/'+this.term+'/'+this.getFormDate(this.date))
                         .then((response) => {
@@ -408,7 +415,7 @@ import VueMonthlyPicker from 'vue-monthly-picker'
                                 labels : this.wait_time_avg_date,
                                 datasets: [
                                     {
-                                        label : '평균 대기 시간',
+                                        label : '平均待機時間',
                                         backgroundColor: '#f87979',
                                         data : this.wait_time_avg
                                     },
@@ -427,7 +434,7 @@ import VueMonthlyPicker from 'vue-monthly-picker'
                                 labels : this.wait_time_avg_date,
                                 datasets: [
                                     {
-                                        label : '평균 대기 시간',
+                                        label : '平均待機時間',
                                         backgroundColor: '#f87979',
                                         data : this.wait_time_avg
                                     },
@@ -447,7 +454,7 @@ import VueMonthlyPicker from 'vue-monthly-picker'
                                 labels : this.wait_time_avg_date,
                                 datasets: [
                                     {
-                                        label : '평균 대기 시간',
+                                        label : '平均待機時間',
                                         backgroundColor: '#f87979',
                                         data : this.wait_time_avg
                                     },
@@ -477,85 +484,119 @@ import VueMonthlyPicker from 'vue-monthly-picker'
 
 <style scoped>
 
+.background{
+     background-color: #E9E9F2;
+     height: 685px;
+}
+
+
 .container{          /* left, right container */
     display:grid;
-    grid-template-columns: 22% 78%;
+    grid-template-columns: 16% 84%;
     width: 100%;
     max-width:1500px;
+    margin-right: 140px;
 }
 
 .left_container_item1{ /* category */
-    width: 70%;
-    margin-top: 220px;
+    display: grid;
+    grid-template-rows: 10% 40% 50% ;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #E6E9ED;
+    border-radius: 15px;
+    margin-right: 25px;
+    margin-bottom: 15px;
+    background-color:white;
+    width: 100%;
+    height: 640px;
+    margin-top: 30px;
+}
+
+#category_header{
+    border-bottom:1.5px solid #E6E9ED;
+    padding: 10px;
+    margin-top: 10px;
+    margin-left: 15px;
+}
+
+#category_body{
+    padding: 10px;
+    margin-top: 5px;
+}
+
+.button0{
+    border-color : white;
+    color:#929293;
+    background-color : white;
 }
 
 .right_container{ 
     display:grid;
-    grid-template-columns: 10% 80%;
-    grid-template-rows: 5% 95%;
-    border-style: solid;
-    border-width: 1px;
-    border-color: #E6E9ED;
-    padding: 10px;
-    margin-top: 20px;
-    height: 660px;
+    grid-template-columns: 100%;
+    grid-template-rows: 13% 87%;
+    width: 100%;
+    height: 610px;
+    margin-top: 30px;
 }
+
 
 .right_container_item1{   /* margin */
     display:grid;
-    grid-template-columns: 13% 80%;
-    grid-column-start: 1;
-    grid-column-end: 4;
-   
+    grid-template-columns: 66% 34%;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #E6E9ED;
+    padding: 20px;
+    width: 101%;
+    height: 100%;
+    border-radius: 15px;
+    margin-left: 25px;
+    background-color: white;
+ 
 }
 
-.right_container_item1_left{
-    border-bottom:2px solid #E6E9ED;
-    margin-bottom: 50px;
+#datepicker{
+    margin-right: 100px;
+
 }
+#buttons1{
+    display:grid;
+    grid-template-columns: 33% 33% 33%;
+}
+
+
 
 .right_container_item2{   /*chart header, buttons, date picker ,body  */
     display:grid;
     grid-template-columns: 100%;
-    grid-template-rows: 18% 15% 67%;
+    grid-template-rows: 7% 13% 80%;
     grid-column-start: 1;
     grid-column-end: 4;
-    font-size: 2.2em;
-    margin-left: 20px;
-    margin-top: 40px;
-
+    border-style: solid;
+    border-width: 1px;
+    border-color: #E6E9ED;
+    margin-top: 20px;
+    margin-left: 25px;
+    width: 99%;
+    height: 540px;
+    border-radius: 15px;
+    padding:10px;
+    background-color: white;
 }
 
-.right_container_item2_header{  /*chart header */
-    display: grid;
-    grid-column-start: 1;
-    grid-column-end: 4;
-    text-align: center;
-    font-size: 1em;
-    color:#716A6A;
-    margin-right: 25px;
-    margin-bottom: 5px;
+#buttons2{
+    margin-left: 10px;
+}
+#chart_header{
+    display: flex;
+  justify-content: center;
+  font-size: 2.2em;
 }
 
-.right_container_item2_header2{ /*chart buttons, date picker */
-    display: grid;
-    grid-column-start: 1;    
-    grid-column-end: 4;
-    grid-template-columns: 33% 33% 33%;
-
+#chart{
+    height: 50%;
 }
-
-.right_container_item2_item1{ /* chart Accumulation, average button */
-    margin-left: 210px;
-}
-
-.right_container_item2_item2{ /* date picker */
-    margin-left: 5px;
-}
-.right_container_item2_item3{ /* chart day, week, month button */
-    margin-left: 50px;
-}
-
 .button{  /* category buttons */
     color : black;
     background-color : white;
@@ -565,7 +606,11 @@ import VueMonthlyPicker from 'vue-monthly-picker'
 }
  
 .chart_button{ 
-    font-size: 0.4em;
-    
+    font-size: 1em;
+    background-color: white;
+    color: black;
+    border: none;
+    margin-right: 10px;
 }
+
 </style>

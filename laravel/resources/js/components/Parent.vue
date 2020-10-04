@@ -1,5 +1,6 @@
 <template>
     <div id = "app">
+        <div id = "for_margin"></div>
         <navigation></navigation>
         <router-view></router-view>
     </div>
@@ -13,3 +14,10 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+#for_margin{
+    height : 10px;
+    background-color: #E9E9F2;
+}
+</style>

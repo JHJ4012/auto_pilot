@@ -3,22 +3,22 @@
     <div id="map"></div>
     <div id="manager">
       <!-- stage = 1 : two station click -->
-      <div v-if="stage == 1">경로를 등록할 두 정류장을 클릭해 주세요.</div>
+      <div v-if="stage == 1">経路を登録する二つの停留所をクリックしてください。</div>
       <!-- stage = 2 : path checkpoint click -->
-      <div v-if="stage == 2">체크포인트 클릭 후 확인 버튼 클릭해 주세요. <br> 
+      <div v-if="stage == 2">チェックポイントをクリックし、確認ボタンをクリックしてください。<br> 
       <!-- check() : checkpoint path create -->
-      <b-button type="button" variant="primary" @click="check()">확인</b-button> </div>
+      <b-button type="button" variant="primary" @click="check()">確認</b-button> </div>
       <!-- stage = 3 : path create information -->
       <div v-if="stage == 3">
         <b-form>
           <!-- two station name -->
           {{station_all[station_start].station_name}} ↔ {{station_all[station_end].station_name}}
-          <div>체크포인트 수 : {{ checkpoint_num }}</div>
-          <div>총 거리 : {{ distance }} m</div>
+          <div>チェックポイント数 : {{ checkpoint_num }}</div>
+          <div>総距離 : {{ distance }} m</div>
           <!-- path_create() : path create function, initialize() : cancel function -->
           <b-button-group>
-            <b-button type="button" variant="primary" @click="path_create()">등록하기</b-button>
-            <b-button type="button" @click="initialize()">취소하기</b-button>
+            <b-button type="button" variant="primary" @click="path_create()">登録</b-button>
+            <b-button type="button" @click="initialize()">キャンセル</b-button>
           </b-button-group>
         </b-form>
       </div>
@@ -166,7 +166,7 @@ export default {
         // custom overlay
         const content =
           "<div style='margin-bottom:36px;'>" +
-          "  <span style='font-size:20px; font-weight:bold; color:red'>건물1</span>" +
+          "  <span style='font-size:20px; font-weight:bold; color:red'>建物1</span>" +
           "</div>";
         // set station custom overlay
         let customOverlay = new kakao.maps.CustomOverlay({
@@ -183,7 +183,7 @@ export default {
         // custom overlay
         const content =
           "<div style='margin-bottom:36px;'>" +
-          "  <span style='font-size:20px; font-weight:bold; color:red'>건물2</span>" +
+          "  <span style='font-size:20px; font-weight:bold; color:red'>建物2</span>" +
           "</div>";
         // set station custom overlay
         let customOverlay = new kakao.maps.CustomOverlay({

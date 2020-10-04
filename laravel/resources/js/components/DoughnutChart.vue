@@ -33,7 +33,7 @@ export default {
     },
     foregroundColor: {
       type: String,
-      default: "#1ABC9C"
+      default: "#2862D0"
     },
     backgroundColor: {
       type: String,

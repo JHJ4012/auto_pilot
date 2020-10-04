@@ -3,29 +3,30 @@
     <div id="map"></div>
     <div id="manager">
       <!-- stage = 1 : checkpoint click --> 
-      <div v-if="stage == 1">지도에서 등록할 체크포인트를 클릭해주세요.</div>
+      <div v-if="stage == 1">地図で登録するチェックポイントをクリックしてください。</div>
       <!-- stage = 2 : data input -->
       <div v-if="stage == 2">
         <b-form>
           <!-- checkpoint latitude, longitude -->
           <div style="margin: 5px;">
             <div>
-              <span style="font-size: 13px">위도 : {{ lat }}</span>
+              <span style="font-size: 13px">緯度 : {{ lat }}</span>
             </div>
             <div>
-              <span style="font-size: 13px">경도 : {{ lon }}</span>
+              <span style="font-size: 13px">軽度 : {{ lon }}</span>
             </div>
           </div>
           <!-- chk_create() : checkpoint create function, initialize() : cancel function -->
           <b-button-group>
-            <b-button type="button" variant="primary" @click="chk_create()">등록하기</b-button>
-            <b-button type="button" @click="initialize()">취소하기</b-button>
+            <b-button type="button" variant="primary" @click="chk_create()">登録</b-button>
+            <b-button type="button" @click="initialize()">キャンセル</b-button>
           </b-button-group>
         </b-form>
       </div>
     </div>
   </div>
 </template>
+
 
 <script>
 export default {

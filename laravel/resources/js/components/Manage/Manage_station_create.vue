@@ -1,10 +1,9 @@
-  
 <template>
   <div class="page-container">
     <div id="map"></div>
     <div id="manager">
       <!-- stage = 1 : station click --> 
-      <div v-if="stage == 1">지도에서 원하는 위치를 클릭해 주세요.</div>
+      <div v-if="stage == 1">地図で希望する位置をクリックしてください。</div>
       <!-- stage = 2 : data input -->
       <div v-if="stage == 2">
         <b-form>
@@ -12,22 +11,22 @@
           <b-form-input
             size="sm"
             v-model="station_name"
-            placeholder="정류장명을 입력해 주세요."
+            placeholder="停留所名を入力してください。"
             required
           ></b-form-input>
           <!-- station latitude, longitude -->
           <div style="margin: 5px;">
             <div>
-              <span style="font-size: 13px">위도 : {{ lat }}</span>
+              <span style="font-size: 13px">緯度 : {{ lat }}</span>
             </div>
             <div>
-              <span style="font-size: 13px">경도 : {{ lon }}</span>
+              <span style="font-size: 13px">軽度 : {{ lon }}</span>
             </div>
           </div>
           <!-- stn_create() : station create function, initialize() : cancel function -->
           <b-button-group>
-            <b-button type="button" variant="primary" @click="stn_create()">등록하기</b-button>
-            <b-button type="button" @click="initialize()">취소하기</b-button>
+            <b-button type="button" variant="primary" @click="stn_create()">登録</b-button>
+            <b-button type="button" @click="initialize()">キャンセル</b-button>
           </b-button-group>
         </b-form>
       </div>

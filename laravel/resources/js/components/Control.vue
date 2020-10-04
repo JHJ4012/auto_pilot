@@ -2,129 +2,161 @@
   <div class="container">
     <div class="left_container">    <!-- left container start-->
         <div class=rc_status>       <!--  rc car real-time status start -->
-          <div id="rc_status_header">실시간 운행상태</div>
+          <div id="rc_status_header">
+            実時間運行狀態</div>
           <div class="status_list">
             <div class = "status_list_item1">
-              <span>전체</span>
-              <strong><div>{{rc.entire_rc}}</div></strong>
+              <span style="color:#78AAFB;">全体</span>
+              <strong><div style="color:white;">{{rc.entire_rc}}</div></strong>
             </div>
             <div class = "status_list_item2">
-              <span>운행 중</span>
-              <strong><div>{{rc.proceeding_rc}}</div></strong>
+              <span style="color:#78AAFB;">運行中</span>
+              <strong><div style="color:white;">{{rc.proceeding_rc}}</div></strong>
             </div>
             <div class = "status_list_item3">
-              <span>운행대기</span>
-              <strong><div>{{rc.waiting_rc}}</div></strong>
+              <span style="color:#78AAFB;">運行待機</span>
+              <strong><div style="color:white;">{{rc.waiting_rc}}</div></strong>
             </div>
             <div class = "status_list_item4">
-              <span>오류</span>
-              <strong><div>{{rc.error_rc}}</div></strong>
+              <span style="color:#78AAFB;">エラー</span>
+              <strong><div style="color:white;">{{rc.error_rc}}</div></strong>
             </div>
             <div class = "status_list_item5">
-              <span>가동률</span>
-              <strong><div style="color:#1ABBA0;">{{rc.operation_rate}}%</div></strong>
+              <span style="color:#78AAFB;">稼働率</span>
+              <strong><div style="color:white;">{{rc.operation_rate}}%</div></strong>
             </div>
           </div>
         </div>                                <!--  rc car real-time status end -->
         <div class="dlvy_status">             <!--  delivery status start -->
-          <div id="dlvy_status_header">실시간 배달 현황</div>
-          <DoughnutChart id="doughnut_chart"
-              :percent=call_info.complete_rate
-              :visibleValue="true"
-              :entire_call=call_info.entire_call 
-              :call_avg_month_ago=call_info.call_avg_month_ago
-              :width="150"
-              :height="130" />
+          <div id="dlvy_status_header">
+            <div id="dlvy_status_icon"></div>
+            <div id="dlvy_status_title">実時間配達現況</div>
+            </div>
+          <div id="chart">
+            <DoughnutChart id="doughnut_chart"
+                :percent=call_info.complete_rate
+                :visibleValue="true"
+                :entire_call=call_info.entire_call 
+                :call_avg_month_ago=call_info.call_avg_month_ago
+                :width="120"
+                :height="100" />
+            </div>
             <div id="dlvy_status_summary">
               <table class= "dlvy_status_list">
               <tbody>
                 <tr>
-                  <td>전체 콜 수</td>
-                  <td>{{call_info.entire_call}}</td>
+                  <td>全体件数</td>
+                  <td><div style="color:#676767;">{{call_info.entire_call}}</div></td>
                 </tr>
                 <tr>
-                  <td>완료 건 수</td>
-                  <td>{{call_info.complete_call}}</td>
+                  <td>完了件数</td>
+                  <td><div style="color:#676767;">{{call_info.complete_call}}</div></td>
                 </tr>
                 <tr>
-                  <td>지난 달 하루 평균 콜 수</td>
-                  <td>{{call_info.call_avg_month_ago}}</td>
+                  <td>先月の1日平均件数</td>
+                  <td><div style="color:#676767;">{{call_info.call_avg_month_ago}}</div></td>
                 </tr>
               </tbody>
               </table>
             </div>
         </div>                              <!--  delivery status end -->
         <div class="cancel_waiting">        <!--  cancelled waiting start -->
-            <div id = "cancel_waiting_header">실시간 대기 취소 현황</div>
-            <div id = "cancel_waiting_summary">
-              <table class="info_item1_list">
+            <div id="cancel_waiting_header">
+              <div id="cancel_waiting_icon"></div>
+              <div id="cancel_waiting_title">実時間待機取取り消し状況</div>
+            </div>
+            <div id="cancel_waiting_summary">
+              <table class="cancel_waiting_list">
               <tbody>
                 <tr>
-                  <strong><td>총 대기 수</td></strong>
-                  <td>{{wait_info.entire_waiting}} 건</td>
+                  <td>総待機数</td>
+                  <td><div style="color:#676767;">{{wait_info.entire_waiting}} 件</div></td>
                 </tr>
                 <tr>
-                  <strong><td>현재 대기 중</td></strong>
-                  <td>{{wait_info.now_waiting}} 건</td>
+                  <td>現在待機中</td>
+                  <td><div style="color:#676767;">{{wait_info.now_waiting}} 件</div></td>
                 </tr>
                 <tr>
-                  <strong><td>대기 취소 건 수</td></strong>
-                  <td>{{wait_info.canceled_waiting}} 건</td>
+                  <td>待機取り消し件数</td>
+                  <td><div style="color:#676767;">{{wait_info.canceled_waiting}} 件</div></td>
                 </tr>
                 <tr>
-                 <strong><td>대기 취소율</td></strong>
-                  <td>{{wait_info.canceled_waiting_rate}}%</td>
+                 <td>待機取り消し率</td>
+                  <td><div style="color:#676767;">{{wait_info.canceled_waiting_rate}}%</div></td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>                          <!--  cancelled waiting end -->
         <div class="rank_bldg">         <!--  building ranking start -->
-          <div id="rank_bldg_header">지난 주 호출 건물 순위</div>
-          <div id="rank_bldg_summary">
-                <strong>1위 </strong><span>{{rank_bldg[0]}}</span><br>
-                <strong>2위 </strong><span>{{rank_bldg[1]}}</span><br>
-                <strong>3위 </strong><span>{{rank_bldg[2]}}</span>
+          <div id="rank_bldg_header">
+            <div id="rank_bldg_icon"></div>
+            <div id="rank_bldg_title">先週の呼出建物の順位</div>
           </div>
+          <div id="rank_bldg_summary">   
+            <table class="rank_bldg_list">
+              <tbody>
+                <tr>
+                  <td>1位</td>
+                  <td><div style="color:#676767;">{{rank_bldg[0]}}</div></td>
+                </tr>
+                <tr>
+                  <td>2位</td>
+                  <td><div style="color:#676767;">{{rank_bldg[1]}}</div></td>
+                </tr>
+                <tr>
+                  <td>3位</td>
+                  <td><div style="color:#676767;">{{rank_bldg[2]}}</div></td>
+                </tr>
+              </tbody>
+            </table>
+         </div>
         </div>                          <!--  building ranking end -->
         <div class="avg_waiting_time">   <!--  average waiting time start -->
-            <div id="avg_waiting_time_header">실시간 평균 대기 시간</div>
+            <div id="avg_waiting_time_header">
+              <div id="avg_waiting_time_icon"></div>
+              <div id="avg_waiting_time_title">実時間平均待ち時間</div>
+            </div>
             <div id="avg_waiting_time_summary">
-            <strong>{{wait_time.avg_waiting_time}}분/ {{wait_time.avg_waiting_time_month_ago}}분</strong><br>
-            <small>(당일 / 지난 달 하루 평균)</small>
+            <strong><span style="color:#676767;">{{wait_time.avg_waiting_time}}分/ {{wait_time.avg_waiting_time_month_ago}}分</span></strong><br>
+            <small>(当日 / 先月一日平均)</small>
           </div>
         </div>                            <!--  average waiting time end -->
       </div>                              <!-- left container end -->
       <div class="right_container">       <!-- right container start -->
         <div class="right_map">           <!-- map start -->
-          <div id="map" style="width:100%;height:100%;">
+          <div id="map">
           </div>
-        </div>                            <!-- map end -->
-        <div class="map_info">            <!-- map information start -->
+              <div class="map_info">            <!-- map information start -->
           <div class="map_box1"></div>
-          <span style="margin-right:10px;">사용 중</span>
+          <span style="margin-right:10px; color:#676767;">使用中</span>
           <div class="map_box2"></div>
-          <span style="margin-right:10px;">사용 가능</span>
+          <span style="margin-right:10px; color:#676767;">使用可能</span>
           <div class="map_box3"></div>
-          <span style="margin-right:10px;">오류</span>
+          <span style="margin-right:10px; color:#676767;">エラー</span>
           <div class="map_box4"></div>
-          <span style="margin-right:10px;">정류장</span>
+          <span style="margin-right:10px; color:#676767;">停留場</span>
         </div>                              <!-- map information end -->
+        </div>                            <!-- map end -->
+
         <div class="right_dlvy_info">       <!-- delivery information start -->
-          <div id="right_dlvy_info_header">운행 정보</div>
+          <div id="right_dlvy_info_header">
+            <div id="right_dlvy_info_icon"></div>
+            <div id="right_dlvy_info_title">運行情報</div>
+          </div>
           <div id="info_item1">
             <table class="info_item1_list">
               <tbody>
                 <tr>
-                  <td>RC이름</td>
+                  <td>自動走行車名前</td>
                   <td>{{rc_info.rc_name}}</td>
                 </tr>
                 <tr>
-                  <td>RC상태</td>
+                  <td>自動走行車状態</td>
                   <td>{{rc_info.rc_status}}</td>
                 </tr>
                 <tr>
-                  <td>오류내역</td>
+                  <td>エラー内訳</td>
                   <td>{{rc_info.rc_error_info}}</td>
                 </tr>
               </tbody>
@@ -134,19 +166,19 @@
             <table class="info_item2_list">
               <tbody>
                 <tr>
-                  <td>출발 정류장 :</td>
+                  <td>出発停留所 :</td>
                   <td>{{point.start_point}}</td>
                 </tr>
                 <tr>
-                  <td>이름 :</td>
+                  <td>名前 :</td>
                   <td>{{user_info.sender_name}}</td>
                 </tr>
                 <tr>
-                  <td>전화번호 :</td>
+                  <td>電話番号 :</td>
                   <td>{{user_info.sender_phone}}</td>
                 </tr>
                  <tr>
-                  <td>출발 시간 :</td>
+                  <td>出発時間 :</td>
                   <td>{{dlvy_time.start_time}}</td>
                 </tr>
               </tbody>
@@ -156,19 +188,19 @@
             <table class="info_item3_list">
               <tbody>
                 <tr>
-                  <td>도착 정류장 :</td>
+                  <td>到着停留所 :</td>
                   <td>{{point.end_point}}</td>
                 </tr>
                 <tr>
-                  <td>이름 :</td>
+                  <td>名前 :</td>
                   <td>{{user_info.receiver_name}}</td>
                 </tr>
                 <tr>
-                  <td>전화번호 :</td>
+                  <td>電話番号 :</td>
                   <td>{{user_info.receiver_phone}}</td>
                 </tr>
                  <tr>
-                  <td>예상 도착 시간 :</td>
+                  <td>予想到着時間 :</td>
                   <td>{{dlvy_time.end_time}}</td>
                 </tr>
               </tbody>
@@ -176,8 +208,8 @@
           </div>
         </div>                            <!-- delivery information end -->
       </div>                              <!-- right container end -->
-      <b-modal id="modal-center" centered title="오류 발생!!">        <!--rc car error message -->
-        <p class="my-4">{{error_info.err_rc_num}}번 RC카에서 오류발생!!</p>
+      <b-modal id="modal-center" centered title="エラー発生!!">        <!--rc car error message -->
+        <p class="my-4">{{error_info.err_rc_num}}番自動運転車にエラー発生!!</p>
         <p class="my-4">{{error_info.err_content}}</p>
       </b-modal>
 </div>
@@ -251,7 +283,7 @@ export default {
         start_time : '',                //start time 
         end_time : ''                   //predicted end time
       },
-      socket : io.connect('https://2a8069e63422.ngrok.io', {    //socket io client
+      socket : io.connect('https://1fe80a1d664e.ngrok.io', {    //socket io client
         port : 3000
       }),
       marker : [],
@@ -292,7 +324,8 @@ export default {
       this.wait_info.entire_waiting = this.wait_info.now_waiting + this.wait_info.complete_waiting + this.wait_info.canceled_waiting;
       this.cal_Rate("cancel", this.wait_info.canceled_waiting, this.wait_info.entire_waiting);
     });
-    this.socket.on("car_data", (data) => {  //when change rc car's location
+    this.socket.on("car_data", (data) => {  //when change rc car's location\
+      console.log('들오옴');
       for(var i = 0, len = this.marker.length ; i < len; i++){
         if(this.marker[i].getTitle() == data.car_num){  //특정 RC카 찾아 위치 바꿔줌
           this.marker[i].setPosition(new kakao.maps.LatLng(data.car_lat, data.car_lon));
@@ -356,11 +389,11 @@ export default {
           position: new kakao.maps.LatLng(this.rc_list[i].car_lat, this.rc_list[i].car_lon), // marker's location
           title : this.rc_list[i].car_num //marker's title
         });
-        if(this.rc_list[i].car_status == "배달중" || this.rc_list[i].car_status == "호출중"){ //setting image
+        if(this.rc_list[i].car_status == "配達中" || this.rc_list[i].car_status == "呼び出し中"){ //setting image
           marker.setImage(this.markerImg.proceedingMarker);
-        }else if(this.rc_list[i].car_status == "배달대기"){
+        }else if(this.rc_list[i].car_status == "配達待機"){
           marker.setImage(this.markerImg.freeMarker);
-        }else if(this.rc_list[i].car_status == "오류"){
+        }else if(this.rc_list[i].car_status == "エラー"){
           marker.setImage(this.markerImg.errMarker);
         }
         this.marker[i] = marker;
@@ -379,10 +412,10 @@ export default {
             this.dlvy_time.start_time = '';
             this.dlvy_time.end_time = '';
 
-            if(response.data.car_status == "배달대기"){   //put the value according to car_status
+            if(response.data.car_status == "配達待機"){   //put the value according to car_status
               this.rc_info.rc_name = response.data.car_name;
               this.rc_info.rc_status = response.data.car_status;
-            }else if(response.data.car_status == "오류"){
+            }else if(response.data.car_status == "エラー"){
               this.rc_info.rc_name = response.data.car_name;
               this.rc_info.rc_status = response.data.car_status;
               this.rc_info.rc_error_info = response.data.car_error;
@@ -399,10 +432,10 @@ export default {
               this.point.end_point = response.data.dlvy_end_point.station_name;
               this.point.end_point_lat = response.data.dlvy_end_point.station_lat;
               this.point.end_point_lon = response.data.dlvy_end_point.station_lon;
-              if(this.rc_info.rc_status == "호출중"){
-                this.dlvy_time.start_time = '호출중'
-                this.dlvy_time.end_time = '호출중'
-              }else if(this.rc_info.rc_status == "배달중"){ 
+              if(this.rc_info.rc_status == "呼び出し中"){
+                this.dlvy_time.start_time = '呼び出し中'
+                this.dlvy_time.end_time = '呼び出し中'
+              }else if(this.rc_info.rc_status == "配達中"){ 
                 var split_time = response.data.dlvy_status.dlvy_start.split(":"); //for excepting second
                 var split_time = [split_time[0], split_time[1]];
                 this.dlvy_time.start_time = split_time.join(':'); //start time
@@ -470,11 +503,11 @@ export default {
       .then((response) => {
         this.rc_list = response.data;
         for(var i = 0, len = this.rc_list.length ; i < len; i++){
-          if(this.rc_list[i].car_status == "배달중" || this.rc_list[i].car_status == "호출중"){
+          if(this.rc_list[i].car_status == "配達中" || this.rc_list[i].car_status == "呼び出し中"){
             this.marker[i].setImage(this.markerImg.proceedingMarker);
-          }else if(this.rc_list[i].car_status == "배달대기"){
+          }else if(this.rc_list[i].car_status == "配達待機"){
             this.marker[i].setImage(this.markerImg.freeMarker);
-          }else if(this.rc_list[i].car_status == "오류"){
+          }else if(this.rc_list[i].car_status == "エラー"){
             this.marker[i].setImage(this.markerImg.errMarker);
           }
         }
@@ -509,22 +542,26 @@ export default {
 </script>
 
 <style scoped>
+
+
+
 .container{
   display: flex;
-  width: 100%;
-  height:640px;
-  max-width:1500px;
-  margin-top: 20px;
-  background-color: #F7F7F7;
-  color:#73879C;
+  width: 2200px;
+  height:675px;
+  max-width:1535px;
+  background-color: #E9E9F2;
+  color:#A6A6A6;
+  margin-right: 25px;
 }
 .left_container{ /*rc_status, dlvy_status, cancel_waiting, rank_bldg, avg_waiting_time*/
   display: grid;
   grid-template-columns: 50% 50%;
-  grid-template-rows: 20% 55% 25%;
-  width: 40%;
-  height: 100%;
+  grid-template-rows: 20% 47% 33%;
+  width: 33%;
+  height: 95%;
   text-align: center;
+  margin-top: 15px;
 }
 
 .rc_status{
@@ -533,31 +570,34 @@ export default {
   grid-column-end: 3;
   grid-template-rows: 25% 75%;
   border-style: solid;
-  border-width: 1px;
-  border-color: #E6E9ED;
-  background-color: #F7F7F7;
+  border-width: 1.5px;
+  border-color: #2862D0;
+  border-radius: 15px;
+  background-color: #2862D0;
   height: 100%;
 }
 
 #rc_status_header{
-  border-bottom:3px solid #E6E9ED;
   padding: 5px;
   margin-right: 2%;
   margin-left: 2%;
   text-align: start;
   font-size: 1em;
+  color: white;
+ 
 }
 
 .status_list{         /* rc car status list 1~5 start */
   display: flex;
   margin-top: 10px;
   margin-bottom: 20px;
+  border-radius: 15px;
 }
 
 .status_list_item1{
   width : 100%;
   text-align : center;
-  border-right:2px solid #ADB2B5;
+  border-right:1.5px solid #78AAFB;
 }
 
 .status_list_item1 div{
@@ -567,7 +607,7 @@ font-size: 2em;
 .status_list_item2{
   width : 100%;
   text-align : center;
-  border-right:2px solid #ADB2B5;
+  border-right:1.5px solid #78AAFB;
 }
 
 .status_list_item2 div{
@@ -576,7 +616,7 @@ font-size: 2em;
 .status_list_item3{
   width : 100%;
   text-align : center;
-  border-right:2px solid #ADB2B5;
+  border-right:1.5px solid #78AAFB;
 }
 .status_list_item3 div{
 font-size: 2em;
@@ -585,7 +625,7 @@ font-size: 2em;
 .status_list_item4{
   width : 100%;
   text-align : center;
-  border-right:2px solid #ADB2B5;
+  border-right:1.5px solid #78AAFB;
 }
 .status_list_item4 div{
 font-size: 2em;
@@ -601,25 +641,50 @@ font-size: 2em;
 }
 
 .dlvy_status{               /* delivery status start */
+  display: grid;
+  grid-template-rows: 15% 45% 40%;
   border-style: solid;
-  border-width: 2px;
+  border-width: 1.5px;
   border-color: #E6E9ED;
+  border-radius: 15px;
   margin-top: 10px;
   margin-right: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   background-color:white;
 }
 
 #dlvy_status_header{
+  display: grid;
+  grid-template-columns: 20% 80%;
   border-bottom:3px solid #E6E9ED;
   padding: 10px;
-  margin-right: 2%;
-  margin-left: 2%;
+  margin-right: 4%;
+  margin-left: 4%;
   text-align: start;
+  font-size: 0.9em;
+  color:#929293;
+  height: 50px;
+}
+
+#chart{
+  margin-bottom: 20px;
+}
+
+.dlvy_status_list td {
+  padding: 10px;
+  line-height: 10px;
+  border-bottom: 1px solid #eeeeee;
   font-size: 1em;
 }
+
+#dlvy_status_icon{
+  width: 100%;
+  height: 100%;
+  background-image: url( "../../../public/image/dlvy_status.jpg" );
+  background-repeat: no-repeat;
+}
+
 #dlvy_status_summary{     /* delivery status end */  
-  margin-top: 10px;
   width: 100%;
   text-align: start;
   margin-left: 10%;
@@ -631,96 +696,171 @@ margin-top: 30px;
 
 .cancel_waiting{           /* canclled waiting */
   border-style: solid;
-  border-width: 2px;
+  border-width: 1.5px;
   border-color: #E6E9ED;
   margin-top: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   background-color: white;
+  border-radius: 15px;
 }
 
 #cancel_waiting_header{
+  display: grid;
+  grid-template-columns: 15% 85%;
   border-bottom:3px solid #E6E9ED;
   padding: 10px;
-  margin-right: 2%;
-  margin-left: 2%;
+  margin-right: 4%;
+  margin-left: 4%;
   text-align: start;
-  font-size: 1em;
+  font-size: 0.85em;
+  color:#929293;
+  height: 50px;
 }
+
+#cancel_waiting_icon{
+  width: 100%;
+  height: 100%;
+  background-image: url( "../../../public/image/cancel_waiting.jpg" );
+  background-repeat: no-repeat;
+}
+
 #cancel_waiting_summary{
    margin-top: 50px;
    margin-left: 25px;
-   font-size: 1.2em;
+   font-size: 1em;
    text-align: left;
 }
 
+.cancel_waiting_list{
+margin-top: 50px;
+}
+
+.cancel_waiting_list td {
+  padding: 8px;
+  line-height: 15px;
+  border-bottom: 1px solid #eeeeee;
+  font-size: 1em;
+}
+
+
 .rank_bldg{               /* most called building ranking*/
   border-style: solid;  
-  border-width: 2px;
+  border-width: 1.5px;
   border-color: #E6E9ED;
   background-color: white;
   margin-right: 20px;
+  border-radius: 15px;
+  
 }
 
 #rank_bldg_summary{
-  margin-top: 10px;
   margin-left: 20px;
   font-size: 1.2em;
   text-align: left;
 }
 
+.rank_bldg_list {
+ margin-top: 30px;
+}
+
+.rank_bldg_list td {
+  padding: 10px;
+  line-height: 20px;
+  border-bottom: 1px solid #eeeeee;
+  font-size: 1em;
+}
+
 #rank_bldg_header{
+  display: grid;
+  grid-template-columns: 20% 80%;
   border-bottom:3px solid #E6E9ED;
   padding: 10px;
-  margin-right: 2%;
-  margin-left: 2%;
+  margin-right: 4%;
+  margin-left: 4%;
   text-align: start;
-  font-size: 1em;
+  font-size: 0.85em;
+  color:#929293;
+    height: 50px;
+}
+
+#rank_bldg_icon{
+  width: 100%;
+  height: 100%;
+  background-image: url( "../../../public/image/rank_bldg.jpg" );
+  background-repeat: no-repeat;
 }
 
 .avg_waiting_time{        /* average waiting time */
   border-style: solid;
-  border-width: 2px;
+  border-width: 1.5px;
   border-color: #E6E9ED;
   background-color: white;
+  border-radius: 15px;
 }
 
 #avg_waiting_time_summary{
-  margin-top: 20px;
+  margin-top: 50px;
   font-size: 1.3em;
 }
+
 #avg_waiting_time_header{
+  display: grid;
+  grid-template-columns: 20% 80%;
   border-bottom:3px solid #E6E9ED;
   padding: 10px;
-  margin-right: 2%;
-  margin-left: 2%;
+  margin-right: 4%;
+  margin-left: 4%;
   text-align: start;
-  font-size: 1em;
+  font-size: 0.9em;
+  color:#929293;
+  height: 50px;
+}
+
+#avg_waiting_time_icon{
+  width: 100%;
+  height: 100%;
+  background-image: url( "../../../public/image/avg_waiting_time.jpg" );
+  background-repeat: no-repeat;
 }
 
 .right_container{       /* map, dlvy_info*/
   display: grid;
   grid-template-columns:100%;
-  grid-template-rows: 57% 6% 37%;
-  width: 60%;
-  height: 100%;
+  grid-template-rows: 67% 33%;
+  width: 67%;
+  height: 95%;
   margin-left: 20px;
+  margin-top: 15px;
 }
 
-.right_map{       
+.right_map{
+  display: grid;
+  grid-template-columns:100%;
+  grid-template-rows: 95% 5%;
   border-style: solid;
-  border-width: 2px;
+  border-width: 1.5px;
   border-color: #E6E9ED;
-  margin-bottom:15px;
+  margin-bottom: 15px;
+  border-radius: 15px;
+  padding: 1.5%;
+  background-color: white;
+}
+
+#map{
+  width:100%;
+  height:100%;
+  border-radius: 15px;
 }
 
 .map_info{
 display:flex;
 height:100%;
-justify-content: center;
+justify-content: left;
+margin-top: 5px;
 }
 
 .map_box1{
-  background-color:#F1C40F;
+  background-color:#FFB72B;
   width:17px;
   height:17px;
   margin-right:10px;
@@ -728,7 +868,7 @@ justify-content: center;
 }
 
 .map_box2{
-  background-color:#3598DB;
+  background-color:#5071C0;
   width:17px;
   height:17px;
   margin-right:10px;
@@ -736,7 +876,7 @@ justify-content: center;
 }
 
 .map_box3{
-  background-color:#E84C3D;
+  background-color:#EA4A85;
   width:17px;
   height:17px;
   margin-right:10px;
@@ -744,7 +884,7 @@ justify-content: center;
 }
 
 .map_box4{
-  background-color:#00B181;
+  background-color:#7ACCBD;
   width:17px;
   height:17px;
   margin-right:10px;
@@ -756,9 +896,11 @@ justify-content: center;
   grid-template-columns: 30% 35% 35%;
   grid-template-rows: 20% 80%;
   border-style: solid;
-  border-width: 2px;
+  border-width: 1.5px;
   border-color: #E6E9ED;
   background-color: white;
+  color:#676767;
+  border-radius: 15px;
 }
 
 #dlvy_info_table{                          
@@ -781,6 +923,8 @@ justify-content: center;
 }
 
 #right_dlvy_info_header{
+  display: grid;
+  grid-template-columns: 4% 96%;
   grid-column-start: 1;
   grid-column-end: 4;
   border-bottom:3px solid #E6E9ED;
@@ -788,33 +932,40 @@ justify-content: center;
   margin-right: 2%;
   margin-left: 2%;
   text-align: start;
-  font-size: 1em;
+  font-size: 0.9em;
+  color:#929293;
+  height: 50px;
 }
 
-.info_item1_list td {
-  padding: 10px;
-  line-height: 20px;
-  border-top: 1px solid #eeeeee;
-  font-size: 0.9em;
+#right_dlvy_info_icon{
+  width: 100%;
+  height: 100%;
+  background-image: url( "../../../public/image/right_dlvy_info.jpg" );
+  background-repeat: no-repeat;
 }
+
+.info_item1_list{
+  margin-top: 40px;
+}
+
 .info_item2_list td {
   padding: 10px;
   line-height: 20px;
-  border-top: 1px solid #eeeeee;
+  border-bottom: 1px solid #eeeeee;
   font-size: 0.9em;
 }
 .info_item3_list td {
   padding: 10px;
   line-height: 20px;
-  border-top: 1px solid #eeeeee;
+  border-bottom: 1px solid #eeeeee;
   font-size: 0.9em;
 }
 
-.dlvy_status_list td {
+.info_item1_list td {
   padding: 10px;
-  line-height: 10px;
-  border-top: 1px solid #eeeeee;
-  font-size: 1em;
+  line-height: 20px;
+  border-bottom: 1px solid #eeeeee;
+  font-size: 0.9em;
 }
 
 </style>
