@@ -59,4 +59,4 @@ Managers can check the status of delivery or the status and location of RC car i
 	<img src="/reference/car.png" width="300px" height="300px" title="Car" alt="Car"></img><br/>
 
 **UCC**
-<iframe width="640" height="360" src="https://youtu.be/76wWuedsmEA" frameborder="0" gesture="media" allowfullscreen=""></iframe>
+<iframe width="640" height="360" src="https://www.youtube.com/watch?v=76wWuedsmEA&feature=youtu.be" frameborder="0" gesture="media" allowfullscreen=""></iframe>
