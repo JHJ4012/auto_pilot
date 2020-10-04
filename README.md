@@ -56,4 +56,4 @@ Managers can check the status of delivery or the status and location of RC car i
 	 - used azimuth difference between two location
 	 - used Lidar to avoid obstacles
 
-![Alt text](/reference/car.png "Car")
+<img src="/reference/car.png" width="450px" height="300px" title="Car" alt="Car"></img><br/>
