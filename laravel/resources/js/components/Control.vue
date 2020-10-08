@@ -63,7 +63,7 @@
         <div class="cancel_waiting">        <!--  cancelled waiting start -->
             <div id="cancel_waiting_header">
               <div id="cancel_waiting_icon"></div>
-              <div id="cancel_waiting_title">実時間待機取取り消し状況</div>
+              <div id="cancel_waiting_title">実時間待機取り消し状況</div>
             </div>
             <div id="cancel_waiting_summary">
               <table class="cancel_waiting_list">
