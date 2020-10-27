@@ -46,7 +46,7 @@ io.on('connection', (socket) => {
         var car_num; 
         
         // Search for cars waiting to be used
-        connection.query('select car_num from car where car_status = "配達待機"', (err, rows, fields) => {
+        connection.query('select car_num from car where car_status = "배달대기"', (err, rows, fields) => {
             if(err) console.log("err : " + err); 
 
             if(rows.length >= 1) { 
@@ -91,13 +91,13 @@ io.on('connection', (socket) => {
                     dd.err = 0;
                     dd.wait = 0;
                     for(var i = 0; i < rows.length; i++){
-                        if(rows[i].car_status=="呼び出し中"){
+                        if(rows[i].car_status=="호출중"){
                             dd.call = rows[i].cnt;
-                        }else if(rows[i].car_status == "配達中"){
+                        }else if(rows[i].car_status == "배달중"){
                             dd.dlvy = rows[i].cnt;
-                        }else if(rows[i].car_status == "配達待機"){
+                        }else if(rows[i].car_status == "배달대기"){
                             dd.wait = rows[i].cnt;
-                        }else if(rows[i].car_status == "エラー"){
+                        }else if(rows[i].car_status == "에러"){
                             dd.err = rows[i].cnt;
                         }
                     }
@@ -156,7 +156,7 @@ io.on('connection', (socket) => {
             if(data.wait == 'no') {  // no waiting
                 
                 // Change to Car Status Delivery Waiting
-                connection.query(`update car set car_status = '配達待機' where (car_num = ${data.car_num})`, (err, rows, fields) => {
+                connection.query(`update car set car_status = '배달대기' where (car_num = ${data.car_num})`, (err, rows, fields) => {
                     if(err) console.log("err : " + err); 
                     else console.log('대기중 변경 Successfully');
                 })
@@ -171,25 +171,25 @@ io.on('connection', (socket) => {
 
     // Vehicle Departure Notification
     socket.on('dlvy_departure', (data) => { 
-        if(data.departure == '出発地'){  // Move to the starting point
+        if(data.departure == '출발지'){  // Move to the starting point
             user = sender_token;
-            title_msg = '呼び出し開始';
-            body_msg = '出発地に向かっています！';
-        }else if(data.departure == '物送り') { // Move to destination
+            title_msg = '호출 시작';
+            body_msg = '출발지에 가고 있습니다!';
+        }else if(data.departure == '물품 보내기') { // Move to destination
             var test = false;
             io.emit('start_test', test);
             user = receiver_token;
-            title_msg = '配達開始';
-            body_msg = '目的地までの配達が始まります！';
+            title_msg = '배달 시작';
+            body_msg = '목적지까지 배달이 시작됩니다!';
 
             // Changed to Car Status Delivery
-            connection.query(`update car set car_status = "配達中" where car_num=${data.car_num}`, (err, rows, fields) => {
+            connection.query(`update car set car_status = "배달중" where car_num=${data.car_num}`, (err, rows, fields) => {
                 if(err) console.log(err);
                 else console.log('배달중 변경 Successfully');
             });
 
             // Change Delivery Status
-            connection.query(`update dlvy set dlvy_status = "配達中", dlvy_start = curtime() where dlvy_num=${data.dlvy_num}`, (err, rows, fields) => {
+            connection.query(`update dlvy set dlvy_status = "배달중", dlvy_start = curtime() where dlvy_num=${data.dlvy_num}`, (err, rows, fields) => {
                 if(err) console.log(err);
                 else console.log('배달중 변경, 배달시작 시간 저장 Successfully');
             });
@@ -199,14 +199,14 @@ io.on('connection', (socket) => {
 
     // Car Arrival Notification
     socket.on('dlvy_arrival', (data) => {
-        if(data.arrival == '出発地') { // Arrival at Departure
+        if(data.arrival == '출발지') { // Arrival at Departure
             user = sender_token;
-            title_msg = '自動車到着';
-            body_msg = '物を入れてください！';
+            title_msg = '로봇도착';
+            body_msg = '물건을 넣어주세요!';
         }else if(data.arrival == '目的地') { // destination arrival
             user = receiver_token;
-            title_msg = '配達到着';
-            body_msg = '物を受け取ってください！';
+            title_msg = '배달도착';
+            body_msg = '물건을 수령해주세요！';
         }
 
         notification_message(user, title_msg, body_msg);
@@ -215,34 +215,34 @@ io.on('connection', (socket) => {
     // Delivery complete
     socket.on('dlvy_complete', (data) => { 
         // Change Delivery Job Status to Complete
-        connection.query(`update dlvy set dlvy_status = "配達完了", dlvy_end = curtime() where dlvy_num=${data.dlvy_num}`, (err, rows, fields) => {
+        connection.query(`update dlvy set dlvy_status = "배달완료", dlvy_end = curtime() where dlvy_num=${data.dlvy_num}`, (err, rows, fields) => {
             if(err) console.log(err);
             else console.log('배달완료 변경, 배달완료 시간 저장 Successfully');
         });
 
         if(data.complete == "受け取り完了"){
             user = sender_token;
-            title_msg = "配達完了"
-            body_msg = "配達完了です！"
+            title_msg = "배달완료"
+            body_msg = "배달완료입니다！"
         }
         notification_message(user, title_msg, body_msg);
 
         // Real-time delivery status, number of completed deliveries to the web
-        connection.query(`select count(*) as count from dlvy where dlvy_date = curdate() and dlvy_status = "配達完了"`, (err, rows, fields) => {
+        connection.query(`select count(*) as count from dlvy where dlvy_date = curdate() and dlvy_status = "배달완료"`, (err, rows, fields) => {
             io.emit("complete_dlvy_count", rows);
         })
 
         // Find Remaining waiting delivery
-        connection.query(`select dlvy_num from dlvy where dlvy_status = "待機中" and dlvy_date = curdate()`, (err, rows, fields) => {
+        connection.query(`select dlvy_num from dlvy where dlvy_status = "대기중" and dlvy_date = curdate()`, (err, rows, fields) => {
             if(rows.length > 0){ // waiting Job Found
 
                 // Change to calling completed car status
-                connection.query(`update car set car_status = "呼び出し中" where car_num = ${data.car_num}`, (err, rows, fields) => {
+                connection.query(`update car set car_status = "호출중" where car_num = ${data.car_num}`, (err, rows, fields) => {
                     if(err) console.log(err);
                     else console.log('RC카 상태 호출중 Successfully');
                 });
                 // Change Delivery Job Status to calling
-                connection.query(`update dlvy set dlvy_car_num = ${data.car_num}, dlvy_status = "呼び出し中", dlvy_wait_time = timestampdiff(minute, dlvy_wait_start, curtime()), dlvy_call_start = curtime() where dlvy_num = ${rows[0].dlvy_num}`, (err, rows, fields) => {
+                connection.query(`update dlvy set dlvy_car_num = ${data.car_num}, dlvy_status = "호출중", dlvy_wait_time = timestampdiff(minute, dlvy_wait_start, curtime()), dlvy_call_start = curtime() where dlvy_num = ${rows[0].dlvy_num}`, (err, rows, fields) => {
                     if(err) console.log(err);
                     else console.log('작업 상태 대기중->호출중 Successfully');
                 });
@@ -271,9 +271,9 @@ io.on('connection', (socket) => {
                 // Send status of waiting operation to the web
                 connection.query(`select dlvy_num from dlvy where dlvy_wait_time is not null and dlvy_date = curdate()`, (err, rows, fields) => {
                     wait_data.wait_complete = rows.length; 
-                    connection.query(`select dlvy_num from dlvy where dlvy_status = "待機中" and dlvy_date = curdate()`, (err, rows, fields) => {
+                    connection.query(`select dlvy_num from dlvy where dlvy_status = "대기중" and dlvy_date = curdate()`, (err, rows, fields) => {
                         wait_data.wait_now = rows.length; 
-                        connection.query(`select dlvy_num from dlvy where dlvy_status = "待機キャンセル" and dlvy_date = curdate()`, (err, rows, fields) => {
+                        connection.query(`select dlvy_num from dlvy where dlvy_status = "대기취소" and dlvy_date = curdate()`, (err, rows, fields) => {
                             wait_data.wait_cancel = rows.length;
                             
                             connection.query(`select floor(avg(dlvy_wait_time)) as time from dlvy where dlvy_date = curdate() group by dlvy_date`, (err, rows, fields) => {
@@ -294,20 +294,20 @@ io.on('connection', (socket) => {
                     dd.wait = 0;
                     console.log(rows[0].cnt);
                     for(var i = 0; i < rows.length; i++){
-                        if(rows[i].car_status=="呼び出し中"){
+                        if(rows[i].car_status=="호출중"){
                             dd.call = rows[i].cnt;
-                        }else if(rows[i].car_status == "配達中"){
+                        }else if(rows[i].car_status == "배달중"){
                             dd.dlvy = rows[i].cnt;
-                        }else if(rows[i].car_status == "配達待機"){
+                        }else if(rows[i].car_status == "배달대기"){
                             dd.wait = rows[i].cnt;
-                        }else if(rows[i].car_status == "エラー"){
+                        }else if(rows[i].car_status == "에러"){
                             dd.err = rows[i].cnt;
                         }
                     }
                     io.emit("rc_status", dd);
                 });
             }else if(rows.length == 0) { // No waiting Operations , End of operation
-                connection.query(`update car set car_status = "配達待機" where car_num = ${data.car_num}`, (err, rows, fields) => {
+                connection.query(`update car set car_status = "배달대기" where car_num = ${data.car_num}`, (err, rows, fields) => {
                     if(err) console.log(err);
 
                     // Send status of cars to the web
@@ -319,13 +319,13 @@ io.on('connection', (socket) => {
                         dd.wait = 0;
                         console.log(rows[0].cnt);
                         for(var i = 0; i < rows.length; i++){
-                            if(rows[i].car_status=="呼び出し中"){
+                            if(rows[i].car_status=="호출중"){
                                 dd.call = rows[i].cnt;
-                            }else if(rows[i].car_status == "配達中"){
+                            }else if(rows[i].car_status == "배달중"){
                                 dd.dlvy = rows[i].cnt;
-                            }else if(rows[i].car_status == "配達待機"){
+                            }else if(rows[i].car_status == "배달대기"){
                                 dd.wait = rows[i].cnt;
-                            }else if(rows[i].car_status == "エラー"){
+                            }else if(rows[i].car_status == "에러"){
                                 dd.err = rows[i].cnt;
                             }
                         }
@@ -340,7 +340,7 @@ io.on('connection', (socket) => {
     socket.on('dlvy_wait_cancel', (data) => {
 
         // Change Delivery Job Status to Unwaiting
-        connection.query(`update dlvy set dlvy_status = "待機キャンセル" where (dlvy_num = ${data.dlvy_num})`, (err, rows, fields) => {
+        connection.query(`update dlvy set dlvy_status = "대기취소" where (dlvy_num = ${data.dlvy_num})`, (err, rows, fields) => {
             if(err) console.log(err);
             
             var wait_data = new Object();
@@ -348,9 +348,9 @@ io.on('connection', (socket) => {
             // Send status of waiting operation to the web
             connection.query(`select dlvy_num from dlvy where dlvy_wait_time is not null and dlvy_date = curdate()`, (err, rows, fields) => {
                 wait_data.wait_complete = rows.length; 
-                connection.query(`select dlvy_num from dlvy where dlvy_status = "待機中" and dlvy_date = curdate()`, (err, rows, fields) => {
+                connection.query(`select dlvy_num from dlvy where dlvy_status = "대기중" and dlvy_date = curdate()`, (err, rows, fields) => {
                     wait_data.wait_now = rows.length; 
-                    connection.query(`select dlvy_num from dlvy where dlvy_status = "待機キャンセル" and dlvy_date = curdate()`, (err, rows, fields) => {
+                    connection.query(`select dlvy_num from dlvy where dlvy_status = "대기취소" and dlvy_date = curdate()`, (err, rows, fields) => {
                         wait_data.wait_cancel = rows.length; 
                                     
                         io.emit('wait_data', wait_data);
@@ -386,11 +386,11 @@ io.on('connection', (socket) => {
     socket.on('rc_error', (data) => { // rc카 id, 작업번호, 오류내역
         
         // Change to car state error, save error history
-        connection.query(`update car set car_status = "エラー", car_error = "${data.err_msg}" where car_num = ${data.car_num}`, (err, rows, fields) => {
+        connection.query(`update car set car_status = "에러", car_error = "${data.err_msg}" where car_num = ${data.car_num}`, (err, rows, fields) => {
             if(err) console.log(err);
         });
         // Change job status to error
-        connection.query(`update dlvy set dlvy_status = "エラー", dlvy_error = "${data.err_msg}" where dlvy_num = ${data.dlvy_num}`, (err, rows, fields) => {
+        connection.query(`update dlvy set dlvy_status = "에러", dlvy_error = "${data.err_msg}" where dlvy_num = ${data.dlvy_num}`, (err, rows, fields) => {
             if(err) console.log(err);
         });
 
@@ -406,13 +406,13 @@ io.on('connection', (socket) => {
             car_data.err = 0;
             car_data.wait = 0;
             for(var i = 0; i < rows.length; i++){
-                if(rows[i].car_status=="呼び出し中"){
+                if(rows[i].car_status=="호출중"){
                     car_data.call = rows[i].cnt;
-                }else if(rows[i].car_status == "配達中"){
+                }else if(rows[i].car_status == "배달중"){
                     car_data.dlvy = rows[i].cnt;
-                }else if(rows[i].car_status == "配達待機"){
+                }else if(rows[i].car_status == "배달대기"){
                     car_data.wait = rows[i].cnt;
-                }else if(rows[i].car_status == "エラー"){
+                }else if(rows[i].car_status == "에러"){
                     car_data.err = rows[i].cnt;
                 }
             }
@@ -441,17 +441,17 @@ function dlvy_call_db_insert(car_num, wait, waiting_num, sender_id, receiver_id,
     if(!wait) { // no waiting
         
         sql = `insert into dlvy(dlvy_car_num, dlvy_status, dlvy_start_point, dlvy_end_point,  dlvy_sender,    dlvy_receiver,   dlvy_call_start, dlvy_date) 
-                          values(${car_num},   "呼び出し中",    '${start_point}', '${end_point}', '${sender_id}', '${receiver_id}',   curtime(),    curdate())`;
+                          values(${car_num},   "호출중",    '${start_point}', '${end_point}', '${sender_id}', '${receiver_id}',   curtime(),    curdate())`;
 
         // Change to car status calling
-        connection.query(`update car set car_status = "呼び出し中" where car_num=${car_num}`, (err, rows, fields) => {
+        connection.query(`update car set car_status = "호출중" where car_num=${car_num}`, (err, rows, fields) => {
             if(err) console.log(err);
             else console.log('호출중 변경 Successfully');
         });
     }else { // waiting
         
         sql = `insert into dlvy(dlvy_status, dlvy_start_point,  dlvy_end_point,   dlvy_sender,  dlvy_receiver, dlvy_wait_start, dlvy_date) 
-                         values("待機中",    '${start_point}',  '${end_point}', '${sender_id}', '${receiver_id}', curtime(),    curdate())`;
+                         values("대기중",    '${start_point}',  '${end_point}', '${sender_id}', '${receiver_id}', curtime(),    curdate())`;
     }
     
     connection.query(sql, (err, rows, fields) => {
@@ -465,8 +465,8 @@ function dlvy_call_db_insert(car_num, wait, waiting_num, sender_id, receiver_id,
             // Send job acceptance notifications to users
             var fcm_message = {
                 notification: { 
-                    title: "配達承知",
-                    body: "配達を確認してください！",
+                    title: "배달수락",
+                    body: "배달을 확인해주세요！",
                 },
                 data: { 
                     waiting_num: ''+waiting_num, 
