@@ -3,14 +3,14 @@
     <div id="map"></div>
     <div id="manager">
       <!-- stage = 1 : click update path station -->
-      <div v-if="stage == 1">経路を修正/削除する停留所をクリックしてください。</div>
+      <div v-if="stage == 1">경로를 수정/삭제할 정류장을 클릭해주세요.</div>
       <!-- stage = 2 : click update path -->
-      <div v-if="stage == 2">修正/削除したい経路をクリックしてください。</div>
+      <div v-if="stage == 2">수정/삭제 하고 싶은 경로를 클릭해주세요.</div>
       <div
         v-show="stage == 2"
         style="border-top: 1px solid #18a2b8; margin-top: 10px"
       >
-        <div style="margin-top:10px; margin-bottom: 10px">現在登録されている経路</div>
+        <div style="margin-top:10px; margin-bottom: 10px">현재 등록된 경로</div>
         <!-- path_one_all : all paths to the station, path_one : clicked path data -->
         <b-list-group v-for="path_one in path_one_all" :key="path_one.id">
           <b-list-group-item>
@@ -20,23 +20,23 @@
             </h5>
             <!-- information about the path -->
             <div v-if="path_one.path_id == path_check"> 
-            <h6>チェックポイント数 : {{ checkpoint_num }}</h6>
-            <h6>総距離 : {{ distance }} m</h6>
+            <h6>체크 포인트 수 : {{ checkpoint_num }}</h6>
+            <h6>총 거리 : {{ distance }} m</h6>
               <div style="margin-top:10px; margin-bottom: 0">
                 <!-- path_update() : path update function -->
                 <b-button
                   variant="info"
                   type="button"
-                  @click="path_update(path_one)">修整</b-button>
+                  @click="path_update(path_one)">수정</b-button>
                 <!-- path_delete() : path delete function, path_one.path_id : path primary_key -->
                 <b-button 
                   type="button" 
                   variant="danger" 
-                  @click="path_delete(path_one.path_id)">削除</b-button>
+                  @click="path_delete(path_one.path_id)">삭제</b-button>
                 <!-- initialize() : data initialization -->
                 <b-button 
                   type="button" 
-                  @click="initialize(1)">キャンセル</b-button>
+                  @click="initialize(1)">취소</b-button>
               </div>
             </div>
           </b-list-group-item>

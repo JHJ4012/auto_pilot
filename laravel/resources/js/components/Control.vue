@@ -3,26 +3,26 @@
     <div class="left_container">    <!-- left container start-->
         <div class=rc_status>       <!--  rc car real-time status start -->
           <div id="rc_status_header">
-            実時間運行狀態</div>
+            실시간 운행 상태</div>
           <div class="status_list">
             <div class = "status_list_item1">
-              <span style="color:#78AAFB;">全体</span>
+              <span style="color:#78AAFB;">전체</span>
               <strong><div style="color:white;">{{rc.entire_rc}}</div></strong>
             </div>
             <div class = "status_list_item2">
-              <span style="color:#78AAFB;">運行中</span>
+              <span style="color:#78AAFB;">운행중</span>
               <strong><div style="color:white;">{{rc.proceeding_rc}}</div></strong>
             </div>
             <div class = "status_list_item3">
-              <span style="color:#78AAFB;">運行待機</span>
+              <span style="color:#78AAFB;">운행대기</span>
               <strong><div style="color:white;">{{rc.waiting_rc}}</div></strong>
             </div>
             <div class = "status_list_item4">
-              <span style="color:#78AAFB;">エラー</span>
+              <span style="color:#78AAFB;">에러</span>
               <strong><div style="color:white;">{{rc.error_rc}}</div></strong>
             </div>
             <div class = "status_list_item5">
-              <span style="color:#78AAFB;">稼働率</span>
+              <span style="color:#78AAFB;">가동률</span>
               <strong><div style="color:white;">{{rc.operation_rate}}%</div></strong>
             </div>
           </div>
@@ -30,7 +30,7 @@
         <div class="dlvy_status">             <!--  delivery status start -->
           <div id="dlvy_status_header">
             <div id="dlvy_status_icon"></div>
-            <div id="dlvy_status_title">実時間配達現況</div>
+            <div id="dlvy_status_title">실시간 배달 현황</div>
             </div>
           <div id="chart">
             <DoughnutChart id="doughnut_chart"
@@ -45,15 +45,15 @@
               <table class= "dlvy_status_list">
               <tbody>
                 <tr>
-                  <td>全体件数</td>
+                  <td>전체 건수</td>
                   <td><div style="color:#676767;">{{call_info.entire_call}}</div></td>
                 </tr>
                 <tr>
-                  <td>完了件数</td>
+                  <td>완료 건수</td>
                   <td><div style="color:#676767;">{{call_info.complete_call}}</div></td>
                 </tr>
                 <tr>
-                  <td>先月の1日平均件数</td>
+                  <td>지난 달 하루 평균 건수</td>
                   <td><div style="color:#676767;">{{call_info.call_avg_month_ago}}</div></td>
                 </tr>
               </tbody>
@@ -63,25 +63,25 @@
         <div class="cancel_waiting">        <!--  cancelled waiting start -->
             <div id="cancel_waiting_header">
               <div id="cancel_waiting_icon"></div>
-              <div id="cancel_waiting_title">実時間待機取り消し状況</div>
+              <div id="cancel_waiting_title">실시간 대기 취소 현황</div>
             </div>
             <div id="cancel_waiting_summary">
               <table class="cancel_waiting_list">
               <tbody>
                 <tr>
-                  <td>総待機数</td>
+                  <td>총 대기수</td>
                   <td><div style="color:#676767;">{{wait_info.entire_waiting}} 件</div></td>
                 </tr>
                 <tr>
-                  <td>現在待機中</td>
+                  <td>현재 대기중</td>
                   <td><div style="color:#676767;">{{wait_info.now_waiting}} 件</div></td>
                 </tr>
                 <tr>
-                  <td>待機取り消し件数</td>
+                  <td>대기 취소 건수</td>
                   <td><div style="color:#676767;">{{wait_info.canceled_waiting}} 件</div></td>
                 </tr>
                 <tr>
-                 <td>待機取り消し率</td>
+                 <td>대기 취소율</td>
                   <td><div style="color:#676767;">{{wait_info.canceled_waiting_rate}}%</div></td>
                 </tr>
               </tbody>
@@ -91,21 +91,21 @@
         <div class="rank_bldg">         <!--  building ranking start -->
           <div id="rank_bldg_header">
             <div id="rank_bldg_icon"></div>
-            <div id="rank_bldg_title">先週の呼出建物の順位</div>
+            <div id="rank_bldg_title">지난 주 호출 건물 순위</div>
           </div>
           <div id="rank_bldg_summary">   
             <table class="rank_bldg_list">
               <tbody>
                 <tr>
-                  <td>1位</td>
+                  <td>1위</td>
                   <td><div style="color:#676767;">{{rank_bldg[0]}}</div></td>
                 </tr>
                 <tr>
-                  <td>2位</td>
+                  <td>2위</td>
                   <td><div style="color:#676767;">{{rank_bldg[1]}}</div></td>
                 </tr>
                 <tr>
-                  <td>3位</td>
+                  <td>3위</td>
                   <td><div style="color:#676767;">{{rank_bldg[2]}}</div></td>
                 </tr>
               </tbody>
@@ -115,11 +115,11 @@
         <div class="avg_waiting_time">   <!--  average waiting time start -->
             <div id="avg_waiting_time_header">
               <div id="avg_waiting_time_icon"></div>
-              <div id="avg_waiting_time_title">実時間平均待ち時間</div>
+              <div id="avg_waiting_time_title">실시간 평균 대기 시간</div>
             </div>
             <div id="avg_waiting_time_summary">
-            <strong><span style="color:#676767;">{{wait_time.avg_waiting_time}}分/ {{wait_time.avg_waiting_time_month_ago}}分</span></strong><br>
-            <small>(当日 / 先月一日平均)</small>
+            <strong><span style="color:#676767;">{{wait_time.avg_waiting_time}}분/ {{wait_time.avg_waiting_time_month_ago}}분</span></strong><br>
+            <small>(당일 / 지난 달 하루 평균)</small>
           </div>
         </div>                            <!--  average waiting time end -->
       </div>                              <!-- left container end -->
@@ -129,34 +129,34 @@
           </div>
               <div class="map_info">            <!-- map information start -->
           <div class="map_box1"></div>
-          <span style="margin-right:10px; color:#676767;">使用中</span>
+          <span style="margin-right:10px; color:#676767;">사용중</span>
           <div class="map_box2"></div>
-          <span style="margin-right:10px; color:#676767;">使用可能</span>
+          <span style="margin-right:10px; color:#676767;">사용 가능</span>
           <div class="map_box3"></div>
-          <span style="margin-right:10px; color:#676767;">エラー</span>
+          <span style="margin-right:10px; color:#676767;">에러</span>
           <div class="map_box4"></div>
-          <span style="margin-right:10px; color:#676767;">停留場</span>
+          <span style="margin-right:10px; color:#676767;">정류장</span>
         </div>                              <!-- map information end -->
         </div>                            <!-- map end -->
 
         <div class="right_dlvy_info">       <!-- delivery information start -->
           <div id="right_dlvy_info_header">
             <div id="right_dlvy_info_icon"></div>
-            <div id="right_dlvy_info_title">運行情報</div>
+            <div id="right_dlvy_info_title">배달 정보</div>
           </div>
           <div id="info_item1">
             <table class="info_item1_list">
               <tbody>
                 <tr>
-                  <td>自動走行車名前</td>
+                  <td>자율주행로봇 이름</td>
                   <td>{{rc_info.rc_name}}</td>
                 </tr>
                 <tr>
-                  <td>自動走行車状態</td>
+                  <td>자율주행로봇 상태</td>
                   <td>{{rc_info.rc_status}}</td>
                 </tr>
                 <tr>
-                  <td>エラー内訳</td>
+                  <td>에러 내역</td>
                   <td>{{rc_info.rc_error_info}}</td>
                 </tr>
               </tbody>
@@ -166,19 +166,19 @@
             <table class="info_item2_list">
               <tbody>
                 <tr>
-                  <td>出発停留所 :</td>
+                  <td>출발 정류장 :</td>
                   <td>{{point.start_point}}</td>
                 </tr>
                 <tr>
-                  <td>名前 :</td>
+                  <td>이름 :</td>
                   <td>{{user_info.sender_name}}</td>
                 </tr>
                 <tr>
-                  <td>電話番号 :</td>
+                  <td>전화번호 :</td>
                   <td>{{user_info.sender_phone}}</td>
                 </tr>
                  <tr>
-                  <td>出発時間 :</td>
+                  <td>출발 시간 :</td>
                   <td>{{dlvy_time.start_time}}</td>
                 </tr>
               </tbody>
@@ -188,19 +188,19 @@
             <table class="info_item3_list">
               <tbody>
                 <tr>
-                  <td>到着停留所 :</td>
+                  <td>도착 정류장 :</td>
                   <td>{{point.end_point}}</td>
                 </tr>
                 <tr>
-                  <td>名前 :</td>
+                  <td>이름 :</td>
                   <td>{{user_info.receiver_name}}</td>
                 </tr>
                 <tr>
-                  <td>電話番号 :</td>
+                  <td>전화번호 :</td>
                   <td>{{user_info.receiver_phone}}</td>
                 </tr>
                  <tr>
-                  <td>予想到着時間 :</td>
+                  <td>예상 소요 시간 :</td>
                   <td>{{dlvy_time.end_time}}</td>
                 </tr>
               </tbody>
@@ -209,7 +209,7 @@
         </div>                            <!-- delivery information end -->
       </div>                              <!-- right container end -->
       <b-modal id="modal-center" centered title="エラー発生!!">        <!--rc car error message -->
-        <p class="my-4">{{error_info.err_rc_num}}番自動運転車にエラー発生!!</p>
+        <p class="my-4">{{error_info.err_rc_num}}번 자율주행로봇에 에러 발생!!</p>
         <p class="my-4">{{error_info.err_content}}</p>
       </b-modal>
 </div>

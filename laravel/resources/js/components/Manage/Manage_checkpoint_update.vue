@@ -3,24 +3,24 @@
     <div id="map"></div>
     <div id="manager">
       <!-- stage = 1 : checkpoint click -->
-      <div v-if="stage == 1">地図で修正/削除するチェックポイントをクリックしてください。</div>
+      <div v-if="stage == 1">지도에서 수정/삭제할 체크 포인트를 클릭해주세요.</div>
       <!-- stage = 2 : update data input -->
       <div v-if="stage == 2">
         <b-form>
           <!-- create latitude, longitude -->
           <div style="margin: 5px;">
             <div>
-              <span style="font-size: 13px">緯度 : {{ lat }}</span>
+              <span style="font-size: 13px">위도 : {{ lat }}</span>
             </div>
             <div>
-              <span style="font-size: 13px">軽度 : {{ lon }}</span>
+              <span style="font-size: 13px">경도 : {{ lon }}</span>
             </div>
           </div>
           <!-- chk_update() : checkpoint update function, chk_delete() : checkpoint delete function, initialize() : cancel function -->
           <b-button-group>
-            <b-button type="button" variant="info" @click="chk_update()">修整</b-button>
-            <b-button variant="danger" type="button" @click="chk_delete()">削除</b-button>
-            <b-button type="button" @click="initialize()">キャンセル</b-button>
+            <b-button type="button" variant="info" @click="chk_update()">수정</b-button>
+            <b-button variant="danger" type="button" @click="chk_delete()">삭제</b-button>
+            <b-button type="button" @click="initialize()">취소</b-button>
           </b-button-group>
         </b-form>
       </div>

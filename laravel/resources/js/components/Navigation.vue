@@ -2,12 +2,12 @@
   <div id="container">
   <b-navbar class="nav">
     <b-navbar-nav>
-      <b-nav-item id="title" to="/">バリバリ</b-nav-item>
+      <b-nav-item id="title" to="/">ADAM</b-nav-item>
     </b-navbar-nav>
     <b-navbar-nav id="navbar-nav">
-      <b-nav-item id="title2" to="/" >管制</b-nav-item>
-      <b-nav-item id="title2" to="/statistics" >統計</b-nav-item>
-      <b-nav-item id="title2" to="/manage" >管理</b-nav-item>
+      <b-nav-item id="title2" to="/" >관제</b-nav-item>
+      <b-nav-item id="title2" to="/statistics" >통계</b-nav-item>
+      <b-nav-item id="title2" to="/manage" >관리</b-nav-item>
     </b-navbar-nav>
   </b-navbar>
   </div>

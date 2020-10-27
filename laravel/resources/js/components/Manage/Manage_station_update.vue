@@ -3,11 +3,11 @@
     <div id="map"></div>
     <div id="manager">
       <!-- stage = 1 : station click --> 
-      <div v-if="stage == 1">地図で修正・削除する停留所をクリックしてください。</div>
+      <div v-if="stage == 1">지도에서 수정/삭제할 정류장을 클릭해주세요.</div>
       <!-- stage = 2 : update data input -->
       <div v-if="stage == 2">
         <b-form>
-          <p>停留所名: {{ station_name }}</p>
+          <p>정류장 이름: {{ station_name }}</p>
           <!-- station name input -->
           <b-form-input 
             v-model="station_name"
@@ -16,18 +16,18 @@
           <!-- station latitude, longitude -->
           <div style="margin: 5px;">
             <div>
-              <span style="font-size: 13px">緯度 : {{ lat }}</span>
+              <span style="font-size: 13px">위도 : {{ lat }}</span>
             </div>
             <div>
-              <span style="font-size: 13px">軽度 : {{ lon }}</span>
+              <span style="font-size: 13px">경도 : {{ lon }}</span>
             </div>
           </div>
           <!-- old_station_name : station name before update -->
           <!-- stn_update() : station update function, stn_delete() : station delete function, initialize() : cancel function -->
           <b-button-group>
-            <b-button type="button" variant="info" @click="stn_update(old_station_name)">修整</b-button>
-            <b-button variant="danger" type="button" @click="stn_delete(old_station_name)">削除</b-button>
-            <b-button type="button" @click="initialize()">キャンセル</b-button>
+            <b-button type="button" variant="info" @click="stn_update(old_station_name)">수정</b-button>
+            <b-button variant="danger" type="button" @click="stn_delete(old_station_name)">삭제</b-button>
+            <b-button type="button" @click="initialize()">취소</b-button>
           </b-button-group>
         </b-form>
       </div>

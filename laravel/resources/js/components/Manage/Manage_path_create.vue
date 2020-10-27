@@ -3,22 +3,22 @@
     <div id="map"></div>
     <div id="manager">
       <!-- stage = 1 : two station click -->
-      <div v-if="stage == 1">経路を登録する二つの停留所をクリックしてください。</div>
+      <div v-if="stage == 1">경로를 등록할 2개의 정류장을 클릭해주세요.</div>
       <!-- stage = 2 : path checkpoint click -->
-      <div v-if="stage == 2">チェックポイントをクリックし、確認ボタンをクリックしてください。<br> 
+      <div v-if="stage == 2">체크 포인트를 클릭하고, 확인 버튼을 클릭해주세요.<br> 
       <!-- check() : checkpoint path create -->
-      <b-button type="button" variant="primary" @click="check()">確認</b-button> </div>
+      <b-button type="button" variant="primary" @click="check()">확인</b-button> </div>
       <!-- stage = 3 : path create information -->
       <div v-if="stage == 3">
         <b-form>
           <!-- two station name -->
           {{station_all[station_start].station_name}} ↔ {{station_all[station_end].station_name}}
-          <div>チェックポイント数 : {{ checkpoint_num }}</div>
-          <div>総距離 : {{ distance }} m</div>
+          <div>체크 포인트 수 : {{ checkpoint_num }}</div>
+          <div>총 거리 : {{ distance }} m</div>
           <!-- path_create() : path create function, initialize() : cancel function -->
           <b-button-group>
-            <b-button type="button" variant="primary" @click="path_create()">登録</b-button>
-            <b-button type="button" @click="initialize()">キャンセル</b-button>
+            <b-button type="button" variant="primary" @click="path_create()">등록</b-button>
+            <b-button type="button" @click="initialize()">취소</b-button>
           </b-button-group>
         </b-form>
       </div>

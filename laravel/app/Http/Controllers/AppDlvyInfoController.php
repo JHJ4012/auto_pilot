@@ -28,7 +28,7 @@ class AppDlvyInfoController extends Controller
         // When there is a delivery send by that user
         if(count($send_info)>0){
             for($i=0; $i<count($send_info); $i++){
-                if($send_info[$i]->dlvy_status == "配達中" || $send_info[$i]->dlvy_status == "呼び出し中" || $send_info[$i]->dlvy_status == "待機中"){
+                if($send_info[$i]->dlvy_status == "배달중" || $send_info[$i]->dlvy_status == "호출중" || $send_info[$i]->dlvy_status == "대기중"){
                     $send_data[$j] = $send_info[$i];
                     $j = $j+1;
                 }
@@ -50,11 +50,11 @@ class AppDlvyInfoController extends Controller
                 $dlvy_info[$i] = $dlvy_info_data;
 
                 // waiting number (if not waiting, waiting number is null)
-                if($dlvy_info_data->dlvy_status == "待機中"){
+                if($dlvy_info_data->dlvy_status == "대기중"){
                     $dlvy_wait_num_data = DB::table('dlvy')
                                 ->whereNotNull('dlvy_wait_start')
                                 ->whereRaw('dlvy_date >= curdate()')
-                                ->where('dlvy_status', '待機中')
+                                ->where('dlvy_status', '대기중')
                                 ->where('dlvy_num','<',$send_data[$i]->dlvy_num)
                                 ->count();
                     $dlvy_wait_num[$i] = $dlvy_wait_num_data+1;
@@ -136,7 +136,7 @@ class AppDlvyInfoController extends Controller
         // When there is a delivery receive to that user
         if(count($receive_info)>0){
             for($i=0; $i<count($receive_info); $i++){
-                if($receive_info[$i]->dlvy_status == "配達中" || $receive_info[$i]->dlvy_status == "呼び出し中" || $receive_info[$i]->dlvy_status == "待機中"){
+                if($receive_info[$i]->dlvy_status == "배달중" || $receive_info[$i]->dlvy_status == "호출중" || $receive_info[$i]->dlvy_status == "대기중"){
                     $receive_data[$j] = $receive_info[$i];
                     $j = $j+1;
                 }
@@ -155,11 +155,11 @@ class AppDlvyInfoController extends Controller
                 $dlvy_info[$i] = $dlvy_info_data;
 
                 // waiting number (if not waiting, waiting number is null)
-                if($dlvy_info_data->dlvy_status == "待機中"){
+                if($dlvy_info_data->dlvy_status == "대기중"){
                     $dlvy_wait_num_data = DB::table('dlvy')
                                 ->whereNotNull('dlvy_wait_start')
                                 ->whereRaw('dlvy_date >= curdate()')
-                                ->where('dlvy_status', '待機中')
+                                ->where('dlvy_status', '대기중')
                                 ->where('dlvy_num','<',$receive_data[$i]->dlvy_num)
                                 ->count();
                     $dlvy_wait_num[$i] = $dlvy_wait_num_data+1;

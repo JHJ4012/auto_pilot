@@ -16,7 +16,7 @@
         <b-form-input 
           v-if="data.item.car_num == ''" 
           v-model="car_num" 
-          :placeholder="update_car_num ? update_car_num : '製品番号'">
+          :placeholder="update_car_num ? update_car_num : '제품번호'">
         </b-form-input>
       </template>
 
@@ -28,7 +28,7 @@
         <b-form-input 
           v-if="data.item.car_name == update_car_name || data.item.car_name == ''" 
           v-model="car_name" 
-          :placeholder="update_car_name ? update_car_name : '車の名前'"></b-form-input>
+          :placeholder="update_car_name ? update_car_name : '로봇 이름'"></b-form-input>
       </template>
 
       <!-- RC car update button -->
@@ -39,13 +39,13 @@
           type="button" 
           @click="updateclick(data.item)" 
           variant="info" 
-          v-if="create_id != 2 && update_id != 2">修整</b-button>
+          v-if="create_id != 2 && update_id != 2">수정</b-button>
         <!-- updation completed -->
         <b-button 
           type="button" 
           @click="updateclick(data.item)" 
           variant="info" 
-          v-if="create_id != 2 && data.item.car_num == update_car_num">完了</b-button>
+          v-if="create_id != 2 && data.item.car_num == update_car_num">완료</b-button>
       </template>
 
       <!-- delete RC car, cancel button -->
@@ -54,12 +54,12 @@
           <b-button 
             type="button" 
             @click="deleteclick(data.item.car_num)" 
-            variant="danger" v-if="create_id != 2 && update_id != 2">削除</b-button>
+            variant="danger" v-if="create_id != 2 && update_id != 2">삭제</b-button>
           <!-- cancel button while creating or updating -->
           <b-button 
             type="button" 
             @click="cancelclick()" 
-            v-if="(create_id == 2 || update_id == 2) && (data.item.car_num == '' || data.item.car_num == update_car_num)">キャンセル</b-button>
+            v-if="(create_id == 2 || update_id == 2) && (data.item.car_num == '' || data.item.car_num == update_car_num)">취소</b-button>
       </template>
     </b-table>
     <!-- pagenation -->
@@ -75,7 +75,7 @@
       type="button" 
       @click="createclick()" 
       variant="success" 
-      v-if="update_id != 2"> {{ create_id == 1 ? "登録" : "登録完了"}}</b-button>
+      v-if="update_id != 2"> {{ create_id == 1 ? "등록" : "등록완료"}}</b-button>
   </b-col>
 </template>
 

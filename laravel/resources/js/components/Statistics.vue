@@ -3,22 +3,22 @@
     <div class="container">
         <div class="left_container">
             <div class="left_container_item1">    <!--category -->
-            <div id="category_header">配達</div>
+            <div id="category_header">배달</div>
 
                 <div id="category_body">
                     <div style="margin-bottom:5px;">
                     <b-button variant="primary" class="button0" @click="categori_change('complete')">
-                        配達完了件数
+                        배달완료건수
                     </b-button>
                     </div>
                     <div style="margin-bottom:5px;">
                     <b-button variant="primary" class="button0" @click="categori_change('waiting_status')">
-                        待機完了/キャンセル
+                        대기완료/취소
                     </b-button>
                     </div>
                     <div>
                     <b-button variant="primary" class="button0" @click="categori_change('waiting_time_avg')">
-                        平均待機時間
+                        평균대기시간
                     </b-button>
                     </div>
                 </div>                         <!-- category -->
@@ -52,24 +52,24 @@
                 </div>  
                  <div id="buttons1">
                                 <b-button variant="primary" class ="chart_button" @click="clicked(mode, 'day')">
-                                    日間
+                                    일간
                                 </b-button>
                                 <b-button  variant="primary" class ="chart_button" @click="clicked(mode, 'week')">
-                                    週間
+                                    주간
                                 </b-button>
                                 <b-button  variant="primary" class ="chart_button" @click="clicked(mode, 'month')">
-                                    月間
+                                    월간
                                 </b-button>
                 </div>
             </div>
                
             <div class="right_container_item2">    <!-- chart header, datepicker, button, body -->  
                 <div id="buttons2">
-                     <b-button variant= "primary" class ="chart_button" @click="clicked('acc', term)" v-if="term != 'day' & categori != '平均待機時間'">
-                                    累積
+                     <b-button variant= "primary" class ="chart_button" @click="clicked('acc', term)" v-if="term != 'day' & categori != '평균대기시간'">
+                                    누적
                             </b-button>
-                            <b-button variant="primary" class ="chart_button" @click="clicked('avg', term)" v-if="term != 'day' & categori != '平均待機時間'">
-                                    平均
+                            <b-button variant="primary" class ="chart_button" @click="clicked('avg', term)" v-if="term != 'day' & categori != '평균대기시간'">
+                                    평균
                             </b-button>
                 </div>       
                 <div id="chart_header">  <!-- chart header -->
@@ -93,7 +93,7 @@ import VueMonthlyPicker from 'vue-monthly-picker'
     export default {
         data(){
             return {
-                categori : '配達完了',
+                categori : '배달완료',
                 date : new Date(),  //graph's date
                 today : new Date(), //today's date
                 for_week_disable : '', //disabled week
@@ -143,11 +143,11 @@ import VueMonthlyPicker from 'vue-monthly-picker'
         methods : {
             categori_change(val){                       //change categori
                 if(val == 'complete'){
-                    this.categori = "配達完了";
+                    this.categori = "배달완료";
                 }else if(val == 'waiting_status'){
-                    this.categori = "待機完了・キャンセル";
+                    this.categori = "대기완료・취소";
                 }else if(val == 'waiting_time_avg'){
-                    this.categori = "平均待機時間";
+                    this.categori = "평균대기시간";
                 }
                 this.mode = "acc"
                 this.term = "day"
@@ -159,7 +159,7 @@ import VueMonthlyPicker from 'vue-monthly-picker'
                 this.loaded(); 
             },
             selected(day){  //user selected date
-                if(this.categori == "配達完了"){   //when categori is completed delivery
+                if(this.categori == "배달완료"){   //when categori is completed delivery
                     if(this.term == 'day'){     //when term is day
                         Axios.get('/api/dlvy/statistics/complete/'+this.mode+'/'+this.term+'/'+this.getFormDate(day.date))   
                         .then((response) => {
@@ -169,7 +169,7 @@ import VueMonthlyPicker from 'vue-monthly-picker'
                                     labels : this.complete_date,
                                     datasets: [
                                         {
-                                            label : '配達完了件数',
+                                            label : '배달완료건수',
                                             backgroundColor: '#f87979',
                                             data : this.complete_number
                                         },
@@ -190,7 +190,7 @@ import VueMonthlyPicker from 'vue-monthly-picker'
                         }
                         this.loaded();
                     }
-                }else if(this.categori == "待機完了・キャンセル"){    //when categori is waiting info
+                }else if(this.categori == "대기완료・취소"){    //when categori is waiting info
                     if(this.term == 'day'){ //when term is day
                         Axios.get('/api/dlvy/statistics/waitcancel/'+this.mode+'/'+this.term+'/'+this.getFormDate(day.date))
                         .then((response) => {
@@ -201,12 +201,12 @@ import VueMonthlyPicker from 'vue-monthly-picker'
                                 labels : this.waiting_status_date,
                                 datasets: [
                                     {
-                                        label : '待機完了件数',
+                                        label : '대기완료건수',
                                         backgroundColor: '#f87979',
                                         data : this.waiting_complete
                                     },
                                     {
-                                        label : '待機キャンセル件数',
+                                        label : '대기취소건수',
                                         backgroundColor : '#2E2EFE',
                                         data : this.waiting_cancel
                                     }
@@ -224,7 +224,7 @@ import VueMonthlyPicker from 'vue-monthly-picker'
                         }
                         this.loaded();
                     }
-                }else if(this.categori == "平均待機時間"){    //when categori is average waiting time
+                }else if(this.categori == "평균대기시간"){    //when categori is average waiting time
                     if(this.term == 'day'){
                         Axios.get('/api/dlvy/statistics/waittimeavg/'+this.term+'/'+this.getFormDate(day.date))
                         .then((response) => {
@@ -234,7 +234,7 @@ import VueMonthlyPicker from 'vue-monthly-picker'
                                 labels : this.wait_time_avg_date,
                                 datasets: [
                                     {
-                                        label : '平均待機時間',
+                                        label : '평균대기시간',
                                         backgroundColor: '#f87979',
                                         data : this.wait_time_avg
                                     },
@@ -267,7 +267,7 @@ import VueMonthlyPicker from 'vue-monthly-picker'
                 return  year + '-' + month + '-' + day;
             },
             loaded(){       //graph load method
-                if(this.categori == "配達完了"){
+                if(this.categori == "배달완료"){
                     if(this.term=='day'){
                         Axios.get('/api/dlvy/statistics/complete/'+this.mode+'/'+this.term+'/'+this.getFormDate(this.date))
                         .then((response) => {
@@ -277,7 +277,7 @@ import VueMonthlyPicker from 'vue-monthly-picker'
                                 labels : this.complete_date,
                                 datasets: [
                                     {
-                                        label : '配達完了件数',
+                                        label : '배달완료건수',
                                         backgroundColor: '#f87979',
                                         data : this.complete_number
                                     },
@@ -296,7 +296,7 @@ import VueMonthlyPicker from 'vue-monthly-picker'
                                 labels : this.complete_date,
                                 datasets: [
                                     {
-                                        label : '配達完了件数',
+                                        label : '배달완료건수',
                                         backgroundColor: '#f87979',
                                         data : this.complete_number
                                     },
@@ -316,7 +316,7 @@ import VueMonthlyPicker from 'vue-monthly-picker'
                                 labels : this.complete_date,
                                 datasets: [
                                     {
-                                        label : '配達完了件数',
+                                        label : '배달완료건수',
                                         backgroundColor: '#f87979',
                                         data : this.complete_number
                                     },
@@ -327,7 +327,7 @@ import VueMonthlyPicker from 'vue-monthly-picker'
                             console.log(error);
                         });
                     }
-                }else if(this.categori == "待機完了・キャンセル"){
+                }else if(this.categori == "대기완료・취소"){
                     if(this.term=='day'){
                         Axios.get('/api/dlvy/statistics/waitcancel/'+this.mode+'/'+this.term+'/'+this.getFormDate(this.date)) 
                         .then((response) => {
@@ -338,12 +338,12 @@ import VueMonthlyPicker from 'vue-monthly-picker'
                                 labels : this.waiting_status_date,
                                 datasets: [
                                     {
-                                        label : '待機完了件数',
+                                        label : '대기완료건수',
                                         backgroundColor: '#f87979',
                                         data : this.waiting_complete
                                     },
                                     {
-                                        label : '待機キャンセル件数',
+                                        label : '대기취소건수',
                                         backgroundColor : '#2E2EFE',
                                         data : this.waiting_cancel
                                     }
@@ -363,12 +363,12 @@ import VueMonthlyPicker from 'vue-monthly-picker'
                                 labels : this.waiting_status_date,
                                 datasets: [
                                     {
-                                        label : '待機完了件数',
+                                        label : '대기완료건수',
                                         backgroundColor: '#f87979',
                                         data : this.waiting_complete
                                     },
                                     {
-                                        label : '待機キャンセル件数',
+                                        label : '대기취소건수',
                                         backgroundColor : '#2E2EFE',
                                         data : this.waiting_cancel
                                     }
@@ -389,12 +389,12 @@ import VueMonthlyPicker from 'vue-monthly-picker'
                                 labels : this.waiting_status_date,
                                 datasets: [
                                     {
-                                        label : '待機完了件数',
+                                        label : '대기완료건수',
                                         backgroundColor: '#f87979',
                                         data : this.waiting_complete
                                     },
                                     {
-                                        label : '待機キャンセル件数',
+                                        label : '대기취소건수',
                                         backgroundColor : '#2E2EFE',
                                         data : this.waiting_cancel
                                     }
@@ -405,7 +405,7 @@ import VueMonthlyPicker from 'vue-monthly-picker'
                             console.log(error);
                         });
                     }
-                }else if(this.categori == "平均待機時間"){
+                }else if(this.categori == "평균대기시간"){
                     if(this.term=='day'){
                         Axios.get('/api/dlvy/statistics/waittimeavg/'+this.term+'/'+this.getFormDate(this.date))
                         .then((response) => {
@@ -415,7 +415,7 @@ import VueMonthlyPicker from 'vue-monthly-picker'
                                 labels : this.wait_time_avg_date,
                                 datasets: [
                                     {
-                                        label : '平均待機時間',
+                                        label : '평균대기시간',
                                         backgroundColor: '#f87979',
                                         data : this.wait_time_avg
                                     },
@@ -434,7 +434,7 @@ import VueMonthlyPicker from 'vue-monthly-picker'
                                 labels : this.wait_time_avg_date,
                                 datasets: [
                                     {
-                                        label : '平均待機時間',
+                                        label : '평균대기시간',
                                         backgroundColor: '#f87979',
                                         data : this.wait_time_avg
                                     },
@@ -454,7 +454,7 @@ import VueMonthlyPicker from 'vue-monthly-picker'
                                 labels : this.wait_time_avg_date,
                                 datasets: [
                                     {
-                                        label : '平均待機時間',
+                                        label : '평균대기시간',
                                         backgroundColor: '#f87979',
                                         data : this.wait_time_avg
                                     },

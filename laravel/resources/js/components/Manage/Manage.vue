@@ -5,46 +5,46 @@
             <div id="category">   
                     <div class="category_header">
                       <div style="margin-left:11px;">
-                        停留場
+                        정류장
                       </div>
                     </div>    
                     <div class="category_item_1">
                       <b-button variant="primary" class="button" @click="station_create()">
-                        停留場登録
+                        정류장 등록
                       </b-button>
                       <b-button variant="primary" class="button" @click="station_update()">
-                        停留場修正/削除
+                        정류장 수정/삭제
                       </b-button>
                     </div>
 
                     <div class="category_header2">
                       <div style="margin-left:11px;">
-                        径路
+                        경로
                       </div>
                     </div>  
                     <div class="category_item_2">
                       <b-button variant="primary" class="button" @click="checkpoint_create()">
-                        チェックポイント登録
+                        체크 포인트 등록
                       </b-button>
                       <b-button variant="primary" class="button" @click="checkpoint_update()">
-                        チェックポイント 修正/削除
+                        체크포인트 수정/삭제
                       </b-button>
                       <b-button variant="primary" class="button1" @click="path_create()">
-                        径路登録
+                        경로등록
                       </b-button>
                       <b-button variant="primary" class="button" @click="path_update()">
-                        径路修正/削除
+                        경로수정/삭제
                       </b-button>
                     </div>
 
                     <div class="category_header3">
                       <div style="margin-left:11px;">
-                        自動運転車
+                        자율주행로봇
                       </div>
                     </div>  
                     <div class="category_item_3">
                       <b-button variant="primary" class="button" @click="rc()">
-                        自動運転車 修正/削除/登録
+                        자율주행로봇 수정/삭제/등록
                       </b-button>
                     </div>
             </div>                    
